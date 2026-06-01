@@ -239,7 +239,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 10, z: -10}
+  FollowOffset: {x: 0, y: 18, z: -14}
 --- !u!114 &261246104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,8 +291,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261246101}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 1.8398018e-16, z: 1.3438998e-17, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 62, z: -10}
+  m_LocalRotation: {x: 0.43935144, y: -0.0000013320498, z: 0.00000065148396, w: 0.8983153}
+  m_LocalPosition: {x: 0, y: 70, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -385,8 +385,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 2.288032e-16, z: -9.4773385e-17, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 62, z: -10}
+  m_LocalRotation: {x: 0.43935147, y: -0.0000013320499, z: 0.00000065148413, w: 0.89831525}
+  m_LocalPosition: {x: 0, y: 70, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -890,6 +890,7 @@ GameObject:
   - component: {fileID: 2061219666}
   - component: {fileID: 2061219668}
   - component: {fileID: 2061219667}
+  - component: {fileID: 2061219669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -936,7 +937,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -964,6 +965,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2061219669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061219665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6bf13bb96bc9d42843814990d0a89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerObj
+  Planet: {fileID: 101487290}
+  moveSpeed: 2
+  rotateSpeed: 5
+  gravityStrength: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
