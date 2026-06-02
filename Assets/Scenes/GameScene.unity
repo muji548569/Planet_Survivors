@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101487290}
   - component: {fileID: 101487291}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Planet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,6 +297,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &308354353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308354354}
+  m_Layer: 7
+  m_Name: GroundCheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &308354354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308354353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2061219666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
@@ -655,7 +686,7 @@ GameObject:
   - component: {fileID: 1415756596}
   - component: {fileID: 1415756599}
   - component: {fileID: 1415756598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1870458729}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CameraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +808,7 @@ GameObject:
   - component: {fileID: 1898712139}
   - component: {fileID: 1898712138}
   - component: {fileID: 1898712137}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +922,7 @@ GameObject:
   - component: {fileID: 2061219668}
   - component: {fileID: 2061219667}
   - component: {fileID: 2061219669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,6 +944,7 @@ Transform:
   m_Children:
   - {fileID: 1898712136}
   - {fileID: 1870458729}
+  - {fileID: 308354354}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2061219667
@@ -978,9 +1010,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerObj
   Planet: {fileID: 101487290}
-  moveSpeed: 2
-  rotateSpeed: 5
+  moveSpeed: 4
+  rotateSpeed: 20
   gravityStrength: 20
+  jumpStrength: 6
+  maxJumpTimes: 2
+  groundCheckPoint: {fileID: 308354354}
+  groundCheckRadius: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
