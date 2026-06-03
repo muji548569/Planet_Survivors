@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private PlayerInputActions inputActions;
+    private WeaponController weaponController;
     private Vector3 gravityDir;         // 重力方向 & 角色中心到星球中心的方向
     private Vector2 moveInput;          // 保存玩家輸入
     private int remainJumpTimes;
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
         // 關閉自動重力
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+
+        weaponController = GetComponent<WeaponController>();
 
         inputActions = new PlayerInputActions();
     }
@@ -43,7 +46,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnDisable()
-    {   
+    {
         // 取消註冊移動事件
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Move.canceled -= OnMove;
@@ -56,13 +59,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
         // 應用旋轉
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime);
     }
-    
+
     private void Move()
     {
         // 計算移動方向
