@@ -6,6 +6,7 @@ public class WeaponData : ScriptableObject
     public string weaponName;
     public float baseDamage;
     public float attackInterval;
-    public float range;
+    public float attackRange;
+    public float duration;
     public GameObject projectilePrefab;
 }

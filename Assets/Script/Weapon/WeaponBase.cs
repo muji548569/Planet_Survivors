@@ -3,13 +3,13 @@ using UnityEngine;
 public abstract class WeaponBase
 {
     public WeaponData weaponData;
-    public Transform ownerPos;
+    public Transform owner;
     public float timer;
 
-    public WeaponBase(WeaponData weaponData, Transform ownerPos)
+    public WeaponBase(WeaponData weaponData, Transform owner)
     {
         this.weaponData = weaponData;
-        this.ownerPos = ownerPos;
+        this.owner = owner;
     }
 
     public void Tick(float deltaTime)

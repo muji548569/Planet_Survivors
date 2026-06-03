@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
         weaponController = GetComponent<WeaponController>();
 
         inputActions = new PlayerInputActions();
+
+        // 測試代碼
+        weaponController.AddWeapon(new SwordWeapon(Resources.Load<WeaponData>("WeaponData/SwordWeapon"),this.transform));
     }
     private void OnEnable()
     {
@@ -55,17 +58,6 @@ public class PlayerController : MonoBehaviour
 
         // 停用Player事件表
         inputActions.Player.Disable();
-    }
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void FixedUpdate()
