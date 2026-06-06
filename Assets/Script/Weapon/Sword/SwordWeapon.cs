@@ -11,6 +11,6 @@ public class SwordWeapon : WeaponBase
         hitbox.transform.localScale = Vector3.one * weaponData.attackRange;
         // 初始化劍氣
         SwordSlash slash = hitbox.GetComponent<SwordSlash>();
-        slash.Init(weaponData.baseDamage, owner, weaponData.duration);
+        slash.Init(weaponData.baseDamage, owner, weaponData.lifetime);
     }
 }

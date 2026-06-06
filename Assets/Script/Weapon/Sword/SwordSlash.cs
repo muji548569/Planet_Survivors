@@ -18,7 +18,7 @@ public class SwordSlash : MonoBehaviour
         this.owner = owner;
         this.lifetime = lifetime;
 
-        Destroy(this.gameObject, this.lifetime);
+        Destroy(gameObject, this.lifetime);
     }
 
     private void OnTriggerEnter(Collider other)

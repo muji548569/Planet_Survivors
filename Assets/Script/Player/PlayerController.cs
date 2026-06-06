@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform Planet;
+    [SerializeField] private Transform planet;
     [Header("Move")]
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float rotateSpeed = 20f;
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         // 測試代碼
         weaponController.AddWeapon(new SwordWeapon(Resources.Load<WeaponData>("WeaponData/SwordWeapon"),this.transform));
+        weaponController.AddWeapon(new FireballWeapon(Resources.Load<WeaponData>("WeaponData/FireballWeapon"), transform, planet));
     }
     private void OnEnable()
     {
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
     private void ApplyGravity()
     {
         // 計算重力方向
-        gravityDir = (Planet.position - transform.position).normalized;
+        gravityDir = (planet.position - transform.position).normalized;
         // 應用重力
         rb.AddForce(gravityDir * gravityStrength, ForceMode.Acceleration);
     }
@@ -116,7 +117,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         // 重新計算重力方向 避免按下跳躍時使用到上一幀或未更新的方向
-        gravityDir = (Planet.position - transform.position).normalized;
+        gravityDir = (planet.position - transform.position).normalized;
 
         // 在地面
         if (isGrounded)
