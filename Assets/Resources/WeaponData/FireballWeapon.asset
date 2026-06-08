@@ -16,7 +16,9 @@ MonoBehaviour:
   baseDamage: 5
   attackInterval: 2
   attackRange: 0
-  lifetime: 10
+  duration: 10
   projectileSpeed: 5
   searchRadius: 25
+  bulletCount: 0
+  weaponPrefab: {fileID: 0}
   projectilePrefab: {fileID: 2227544548701127014, guid: dcd873a588ffb974a96658c432b3fd4f, type: 3}

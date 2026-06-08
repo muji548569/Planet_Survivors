@@ -35,8 +35,9 @@ public class PlayerController : MonoBehaviour
         inputActions = new PlayerInputActions();
 
         // 測試代碼
-        weaponController.AddWeapon(new SwordWeapon(Resources.Load<WeaponData>("WeaponData/SwordWeapon"),this.transform));
-        weaponController.AddWeapon(new FireballWeapon(Resources.Load<WeaponData>("WeaponData/FireballWeapon"), transform, planet));
+        //weaponController.AddWeapon(new SwordWeapon(Resources.Load<WeaponData>("WeaponData/SwordWeapon"),this.transform));
+        //weaponController.AddWeapon(new FireballWeapon(Resources.Load<WeaponData>("WeaponData/FireballWeapon"), transform, planet));
+        weaponController.AddWeapon(new OrbitWeapon(Resources.Load<WeaponData>("WeaponData/OrbitWeapon"), this.transform));
     }
     private void OnEnable()
     {

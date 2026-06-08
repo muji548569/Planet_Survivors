@@ -14,7 +14,7 @@ public class FireballWeapon : WeaponBase
         Fireball fireball = hitbox.GetComponent<Fireball>();
         fireball.Init(weaponData.baseDamage, 
                       owner, 
-                      weaponData.lifetime, 
+                      weaponData.duration, 
                       weaponData.projectileSpeed, 
                       planet, 
                       weaponData.searchRadius);
