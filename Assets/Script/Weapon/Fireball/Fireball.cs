@@ -76,7 +76,11 @@ public class Fireball : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             // 敵人受傷邏輯
-            print($"{owner.name}對{other.name}造成{damage}點傷害");
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
     }
