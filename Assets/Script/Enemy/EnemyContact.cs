@@ -14,7 +14,14 @@ public class EnemyContact : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         if (timer > 0) return;
-        // 玩家扣血功能
+
+        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        if (player != null)
+        {
+            player.TakeDamage(data.contactDamage);
+            print("造成傷害");
+        }
+
         timer = data.attackCooldown;
     }
 }

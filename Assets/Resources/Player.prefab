@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 3214957399869254756}
   - component: {fileID: 2577343009827811571}
   - component: {fileID: 2834302360362579256}
+  - component: {fileID: 490047885963723481}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6bf13bb96bc9d42843814990d0a89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerObj
-  Planet: {fileID: 0}
+  planet: {fileID: 0}
   moveSpeed: 4
   rotateSpeed: 20
   gravityStrength: 20
@@ -154,6 +155,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30f723f8620f6d4aa0444a82f0f2197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
+--- !u!114 &490047885963723481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846108624138493941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e812cd4175bcf25409af8b4d50d13079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHp: 50
+  isDead: 0
 --- !u!1 &6362218404888008956
 GameObject:
   m_ObjectHideFlags: 0
