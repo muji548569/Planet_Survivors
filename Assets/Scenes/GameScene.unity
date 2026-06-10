@@ -608,8 +608,11 @@ GameObject:
   - component: {fileID: 661677180}
   - component: {fileID: 661677179}
   - component: {fileID: 661677183}
+  - component: {fileID: 661677186}
+  - component: {fileID: 661677185}
+  - component: {fileID: 661677184}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: BasicEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,8 +736,47 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &661677184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661677178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b253cc0d7dd0d4ba5482dd2f8efdf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
+--- !u!114 &661677185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661677178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b435f24a8ccc4ac42816f35804648ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
+  planet: {fileID: 101487290}
+--- !u!114 &661677186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661677178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01bfce968d80a34a97531e0b057b91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyContact
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,6 +1219,10 @@ PrefabInstance:
       objectReference: {fileID: 101487290}
     - target: {fileID: 5846108624138493941, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846108624138493941, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7286001984970729814, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
