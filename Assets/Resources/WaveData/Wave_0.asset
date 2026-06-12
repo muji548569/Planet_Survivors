@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a514269fed526bf42a1a67cbad6a7253, type: 3}
+  m_Name: Wave_0
+  m_EditorClassIdentifier: Assembly-CSharp::WaveData
+  waveName: Wave0
+  startTime: 0
+  repeat: 0
+  repeatInterval: 30
+  spawnEvents:
+  - eventName: Random
+    enemyPrefab: {fileID: 7566541453131500546, guid: 502c55d9f03d8844d81e368e188eb4aa, type: 3}
+    waveType: 0
+    delay: 0
+    spawnInterval: 0.5
+    spawnCount: 50
+    spawnSpread: 10
+  - eventName: circle
+    enemyPrefab: {fileID: 7566541453131500546, guid: 502c55d9f03d8844d81e368e188eb4aa, type: 3}
+    waveType: 1
+    delay: 5
+    spawnInterval: 15
+    spawnCount: 20
+    spawnSpread: 0
