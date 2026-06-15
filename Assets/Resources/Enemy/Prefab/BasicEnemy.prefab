@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5778841815845553112}
   - component: {fileID: 2894675383201881082}
   - component: {fileID: 7473414660858663716}
+  - component: {fileID: -140060868244567581}
   m_Layer: 8
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -169,7 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
-  planet: {fileID: 0}
 --- !u!114 &7473414660858663716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,4 +182,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b253cc0d7dd0d4ba5482dd2f8efdf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
+--- !u!114 &-140060868244567581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7566541453131500546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018ca0ddb218451439c05c9fe0f3c8a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDropper
   data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}

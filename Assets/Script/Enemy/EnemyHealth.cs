@@ -21,10 +21,12 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die() 
     {
-        if(data.dropPrefab != null)
+        EnemyDropper dropper = GetComponent<EnemyDropper>();
+        if(dropper != null)
         {
-            Instantiate(data.dropPrefab, transform.position, transform.rotation);
+            dropper.Drop();
         }
+
         Destroy(gameObject);
     }
 }

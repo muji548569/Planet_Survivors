@@ -18,4 +18,13 @@ MonoBehaviour:
   contactDamage: 2
   attackCooldown: 0.5
   knockbackResistance: 0
-  dropPrefab: {fileID: 0}
+  drops:
+  - prefab: {fileID: 1331625538073247312, guid: 1453489e3df68994390735f9d6d5ac19, type: 3}
+    dropChance: 1
+    minAmount: 1
+    maxAmount: 1
+  - prefab: {fileID: 4979377399444734632, guid: 1e9cedcb5e2c242458bb2cae34f5f9d6, type: 3}
+    dropChance: 1
+    minAmount: 1
+    maxAmount: 2
+  dropSpreadRadius: 0.5

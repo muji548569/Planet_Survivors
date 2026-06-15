@@ -12,5 +12,6 @@ public class EnemyData : ScriptableObject
     public float attackCooldown;
     public float knockbackResistance;
     [Header("Drop")]
-    public GameObject dropPrefab;
+    public DropEntry[] drops;
+    public float dropSpreadRadius;
 }
