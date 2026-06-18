@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         panelDict = new Dictionary<E_PanelType, BasePanel>();
         foreach (var panel in panels)
