@@ -36,7 +36,7 @@ public class DropItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerProgression player = other.GetComponent<PlayerProgression>();
+        PlayerCollector player = other.GetComponent<PlayerCollector>();
         if (player == null) return;
 
         switch (data.dropType)

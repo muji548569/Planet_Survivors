@@ -2,19 +2,13 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float maxHp = 50;
     public bool isDead;
-    private float currentHp;
-
-    private void Awake()
-    {
-        currentHp = maxHp;
-    }
 
     public void TakeDamage(float damage)
     {
-        currentHp -= damage;
-        if (currentHp <= 0)
+        float newhp = PlayerDataManager.Instance.Data.currentHp - damage;
+        PlayerDataManager.Instance.SetHealth(newhp);
+        if (newhp <= 0)
         {
             Die();
         }
