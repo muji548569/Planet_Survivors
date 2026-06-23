@@ -8,20 +8,27 @@ public class GamePanel : BasePanel
     [SerializeField] private Text textCoin;
     [SerializeField] private Text textTimer;
     [SerializeField] private Text textHealth;
+    [SerializeField] private Text textLevel;
+    private float Timer;
 
-    private void Start()
+    private void OnEnable()
     {
+        if (PlayerDataManager.Instance == null) return;
+        if (!PlayerDataManager.Instance.IsInitialized) return;
+
         PlayerDataManager.Instance.OnHealthChanged += SetHealth;
         PlayerDataManager.Instance.OnExpChanged += SetExp;
         PlayerDataManager.Instance.OnCoinChanged += SetCoin;
+        PlayerDataManager.Instance.OnLevelChanged += SetLevel;
         PlayerDataManager.Instance.NotifyAll();
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (PlayerDataManager.Instance == null) return;
         PlayerDataManager.Instance.OnHealthChanged -= SetHealth;
         PlayerDataManager.Instance.OnExpChanged -= SetExp;
         PlayerDataManager.Instance.OnCoinChanged -= SetCoin;
+        PlayerDataManager.Instance.OnLevelChanged -= SetLevel;
     }
 
 
@@ -41,10 +48,28 @@ public class GamePanel : BasePanel
         textCoin.text = amount.ToString();
     }
 
-    public void SetTime(int time)
+    public void SetTime(float time)
     {
-        int min = time / 60;
-        int sec = time % 60;
-        textTimer.text = min + ":" + sec;
+        int runtime = Mathf.FloorToInt(time);
+
+        int hour = runtime / 3600;
+        int minute = (runtime % 3600) / 60;
+        int second = runtime % 60;
+
+        if (hour > 0)
+            textTimer.text = $"{hour:D2}:{minute:D2}:{second:D2}";
+        else
+            textTimer.text = $"{minute:D2}:{second:D2}";
+    }
+
+    public void SetLevel(int level)
+    {
+        textLevel.text = $"LEVEL {level}";
+    }
+
+    private void Update()
+    {
+        Timer += Time.deltaTime;
+        SetTime(Timer);
     }
 }

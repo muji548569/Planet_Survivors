@@ -21,8 +21,6 @@ public class AudioManager : MonoBehaviour
         }
 
         Instance = this;
-        
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayBGM(AudioClip clip, bool loop = true)

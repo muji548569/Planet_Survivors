@@ -11,6 +11,8 @@ public class PlayerDataManager : MonoBehaviour
     public Action<int> OnCoinChanged;
     public Action<int> OnLevelChanged;
 
+    public bool IsInitialized { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,13 +21,21 @@ public class PlayerDataManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    public void Init()
+    {
+        if(IsInitialized) return;
 
         Data = new PlayerData();
         Data.currentHp = Data.maxHp;
+
+        IsInitialized = true;
     }
 
     public void NotifyAll()
     {
+        if(!IsInitialized) return;
         OnHealthChanged?.Invoke(Data.currentHp, Data.maxHp);
         OnExpChanged?.Invoke(Data.currentExp, GetExpToNextLevel());
         OnCoinChanged?.Invoke(Data.currentCoin);
@@ -69,7 +79,7 @@ public class PlayerDataManager : MonoBehaviour
     private void LevelUp()
     {
         Data.level++;
-
+    
         OnLevelChanged?.Invoke(Data.level);
 
         // TODO: 觸發升級UI
