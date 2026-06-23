@@ -24,4 +24,5 @@ public enum E_PanelType
     GameOver,
     LevelUp,
     Setting,
+    Pause,
 }
