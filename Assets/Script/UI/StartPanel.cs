@@ -12,7 +12,7 @@ public class StartPanel : BasePanel
     {
         btnStart.onClick.AddListener(() =>
         {
-            StartCoroutine(StartGame());
+            GameFlowManager.Instance.StartGame();
         });
 
         btnSetting.onClick.AddListener(() => 
@@ -25,14 +25,5 @@ public class StartPanel : BasePanel
         {
             Application.Quit();
         });
-    }
-
-    // 開一個協程 等場景加載完再切換UI
-    private IEnumerator StartGame()
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync("GameScene");
-        yield return operation;
-        PlayerDataManager.Instance.Init();
-        UIManager.Instance.SwitchScreen(E_PanelType.Game);
     }
 }
