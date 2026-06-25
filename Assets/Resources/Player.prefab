@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2577343009827811571}
   - component: {fileID: 2834302360362579256}
   - component: {fileID: 490047885963723481}
+  - component: {fileID: 5419026009549078211}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -118,7 +119,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2577343009827811571
 MonoBehaviour:
@@ -167,8 +168,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e812cd4175bcf25409af8b4d50d13079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHp: 50
   isDead: 0
+--- !u!114 &5419026009549078211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5846108624138493941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebfd6bd451ef05459938d69aa73d7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollector
 --- !u!1 &6362218404888008956
 GameObject:
   m_ObjectHideFlags: 0

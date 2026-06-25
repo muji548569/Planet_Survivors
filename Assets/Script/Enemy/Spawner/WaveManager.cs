@@ -20,11 +20,9 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-
     void Update()
     {
-        // 計時
-        elapsedTime += Time.deltaTime;
+        if (!GameSessionManager.Instance.IsPlaying) return; 
         // 遍歷WaveRuntime數組
         foreach (WaveRuntime wave in waves)
         {
@@ -46,6 +44,17 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
+
+    private void OnEnable()
+    {
+        GameSessionManager.Instance.OnTimeChanged += getTime;
+    }
+
+    private void OnDisable()
+    {
+        GameSessionManager.Instance.OnTimeChanged -= getTime;
+    }
+
     /// <summary>
     /// 啟動一個波次(wavedata)
     /// </summary>
@@ -78,5 +87,10 @@ public class WaveManager : MonoBehaviour
             // 等待生成間隔
             yield return new WaitForSeconds(spawnEvent.spawnInterval);
         }
+    }
+
+    private void getTime(float time)
+    {
+        elapsedTime = time;
     }
 }

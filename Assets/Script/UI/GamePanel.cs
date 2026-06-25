@@ -9,7 +9,6 @@ public class GamePanel : BasePanel
     [SerializeField] private Text textTimer;
     [SerializeField] private Text textHealth;
     [SerializeField] private Text textLevel;
-    private float Timer;
 
     private void OnEnable()
     {
@@ -21,6 +20,8 @@ public class GamePanel : BasePanel
         PlayerDataManager.Instance.OnCoinChanged += SetCoin;
         PlayerDataManager.Instance.OnLevelChanged += SetLevel;
         PlayerDataManager.Instance.NotifyAll();
+
+        GameSessionManager.Instance.OnTimeChanged += SetTime;
     }
     private void OnDisable()
     {
@@ -29,6 +30,8 @@ public class GamePanel : BasePanel
         PlayerDataManager.Instance.OnExpChanged -= SetExp;
         PlayerDataManager.Instance.OnCoinChanged -= SetCoin;
         PlayerDataManager.Instance.OnLevelChanged -= SetLevel;
+
+        GameSessionManager.Instance.OnTimeChanged -= SetTime;
     }
 
 
@@ -48,28 +51,20 @@ public class GamePanel : BasePanel
         textCoin.text = amount.ToString();
     }
 
-    public void SetTime(float time)
-    {
-        int runtime = Mathf.FloorToInt(time);
-
-        int hour = runtime / 3600;
-        int minute = (runtime % 3600) / 60;
-        int second = runtime % 60;
-
-        if (hour > 0)
-            textTimer.text = $"{hour:D2}:{minute:D2}:{second:D2}";
-        else
-            textTimer.text = $"{minute:D2}:{second:D2}";
-    }
-
     public void SetLevel(int level)
     {
         textLevel.text = $"LEVEL {level}";
     }
 
-    private void Update()
+    public void SetTime(float time)
     {
-        Timer += Time.deltaTime;
-        SetTime(Timer);
+        textTimer.text = FormatTime(time);
+    }
+
+    private string FormatTime(float time)
+    {
+        int minute = Mathf.FloorToInt(time / 60f);
+        int second = Mathf.FloorToInt(time % 60f);
+        return $"{minute:00}:{second:00}";
     }
 }

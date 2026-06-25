@@ -40,6 +40,7 @@ public class GameFlowManager : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync("GameScene");
         yield return operation;
         PlayerDataManager.Instance.Init();
+        GameSessionManager.Instance.StartSession();
         UIManager.Instance.SwitchScreen(E_PanelType.Game);
     }
 }

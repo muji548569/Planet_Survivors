@@ -9,6 +9,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float planetRadius = 50f;
     public void Spawn(SpawnEvent spawnEvent, int index)
     {
+        if(player == null || planet == null) return;
+        if(spawnEvent.enemyPrefab == null) return;
+
         switch (spawnEvent.waveType)
         {
             case E_WaveType.RandomBackside:
@@ -27,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnRandomBackside(GameObject enemyPrefab, float spawnSpread)
     {
         // 玩家方向
-        Vector3 playerDir = (player.position - transform.position).normalized;
+        Vector3 playerDir = (player.position - planet.position).normalized;
         // 星球背面方向
         Vector3 backDir = -playerDir;
         // 給背面方向添加一些隨機量
@@ -53,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnCircle(GameObject enemyPrefab, int count, int index, float spawnSpread)
     {
         // 玩家方向
-        Vector3 playerDir = (player.position - transform.position).normalized;
+        Vector3 playerDir = (player.position - planet.position).normalized;
 
         // 圓環中心方向 (相對玩家的星球背面)
         Vector3 centerDir = -playerDir;

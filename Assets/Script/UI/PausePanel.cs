@@ -12,7 +12,7 @@ public class PausePanel : BasePanel
     {
         btnResume.onClick.AddListener(() =>
         {
-            GamePauseManager.Instance.ResumeGame();
+            GamePauseManager.Instance.TogglePausePanel();
         });
 
         btnSetting.onClick.AddListener(() =>

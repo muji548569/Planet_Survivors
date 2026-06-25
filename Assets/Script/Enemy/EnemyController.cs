@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (target == null) return;
         Vector3 targetDir = target.position - transform.position;
         Vector3 normal = (transform.position - planet.position).normalized;
         Vector3 moveDir = Vector3.ProjectOnPlane(targetDir, normal).normalized;

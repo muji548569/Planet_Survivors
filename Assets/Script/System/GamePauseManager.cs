@@ -32,28 +32,33 @@ public class GamePauseManager : MonoBehaviour
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        TogglePause();
+        TogglePausePanel();
     }
 
-    public void TogglePause()
+    public void TogglePausePanel()
     {
-        if(IsPaused)
+        if (IsPaused)
+        {
             ResumeGame();
+            UIManager.Instance.ClosePopup(E_PanelType.Pause);
+        }
         else
+        {
             PauseGame();
+            UIManager.Instance.OpenPopup(E_PanelType.Pause);
+        }
+            
     }
 
     public void PauseGame()
     {
         IsPaused = true;
         Time.timeScale = 0f;
-        UIManager.Instance.OpenPopup(E_PanelType.Pause);
     }
 
     public void ResumeGame()
     {
         IsPaused = false;
         Time.timeScale = 1f;
-        UIManager.Instance.ClosePopup(E_PanelType.Pause);
     }
 }
