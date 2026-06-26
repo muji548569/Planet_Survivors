@@ -8,7 +8,7 @@ public class PlayerData
     public int currentCoin;
 
     public float currentHp;
-    public float maxHp = 1;
+    public float maxHp = 20;
 
     public int baseExpToNextLevel = 10;
     public float expGrowthRate = 1.25f;

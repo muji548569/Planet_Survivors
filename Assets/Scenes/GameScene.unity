@@ -999,6 +999,10 @@ PrefabInstance:
       propertyPath: planet
       value: 
       objectReference: {fileID: 101487290}
+    - target: {fileID: 2834302360362579256, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: planet
+      value: 
+      objectReference: {fileID: 101487290}
     - target: {fileID: 5846108624138493941, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: m_Name
       value: Player

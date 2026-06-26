@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private PlayerInputActions inputActions;
-    private WeaponController weaponController;
     private Vector3 gravityDir;         // 重力方向 & 角色中心到星球中心的方向
     private Vector2 moveInput;          // 保存玩家輸入
     private int remainJumpTimes;
@@ -30,14 +29,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
 
-        weaponController = GetComponent<WeaponController>();
-
         inputActions = new PlayerInputActions();
-
-        // 測試代碼
-        weaponController.AddWeapon(new SwordWeapon(Resources.Load<WeaponData>("WeaponData/SwordWeapon"),this.transform));
-        weaponController.AddWeapon(new FireballWeapon(Resources.Load<WeaponData>("WeaponData/FireballWeapon"), transform, planet));
-        weaponController.AddWeapon(new OrbitWeapon(Resources.Load<WeaponData>("WeaponData/OrbitWeapon"), this.transform));
     }
     private void OnEnable()
     {

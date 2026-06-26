@@ -12,6 +12,6 @@ public class HealthBarUI : MonoBehaviour
             imgFill.fillAmount = 0;
             return;
         }
-        imgFill.fillAmount = currentHealth / maxHealth;
+        imgFill.fillAmount = Mathf.Clamp01(currentHealth / maxHealth);
     }
 }

@@ -25,12 +25,16 @@ public class PlayerDataManager : MonoBehaviour
 
     public void Init()
     {
-        if(IsInitialized) return;
+        ResetData();
+        IsInitialized = true;
+    }
 
+    public void ResetData()
+    {
         Data = new PlayerData();
         Data.currentHp = Data.maxHp;
 
-        IsInitialized = true;
+        NotifyAll();
     }
 
     public void NotifyAll()

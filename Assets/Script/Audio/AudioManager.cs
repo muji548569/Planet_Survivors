@@ -52,13 +52,13 @@ public class AudioManager : MonoBehaviour
     public void SetBGMOn(bool isOn)
     {
         soundData.bgmOn = isOn;
-        bgmSource.mute = isOn;
+        bgmSource.mute = !isOn;
     }
 
     public void SetSFXOn(bool isOn)
     {
         soundData.sfxOn = isOn;
-        sfxSource.mute = isOn;
+        sfxSource.mute = !isOn;
     }
 
     public void SetBGMVolume(float volume)

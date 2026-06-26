@@ -13,6 +13,7 @@ public class EnemyContact : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        if (!collision.gameObject.CompareTag("Player")) return;
         if (timer > 0) return;
 
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();

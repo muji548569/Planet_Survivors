@@ -30,17 +30,18 @@ public class WaveManager : MonoBehaviour
             {
                 // 啟動波次
                 StartCoroutine(RunWave(wave.data));
-            }
 
-            if (wave.data.repeat)
-            {
-                wave.nextTriggerTime = wave.data.repeatInterval;
-            }
-            else
-            {
-                // 如果不需要重複啟動的波次
-                // 直接把下次執行時間拉到無限
-                wave.nextTriggerTime = float.MaxValue;
+                if (wave.data.repeat)
+                {
+                    // 如果是重複波次 下次觸發時間為
+                    wave.nextTriggerTime += wave.data.repeatInterval;
+                }
+                else
+                {
+                    // 如果不需要重複啟動的波次
+                    // 直接把下次執行時間拉到無限
+                    wave.nextTriggerTime = float.MaxValue;
+                }
             }
         }
     }

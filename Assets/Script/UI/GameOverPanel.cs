@@ -19,7 +19,7 @@ public class GameOverPanel : BasePanel
 
     private void OnEnable()
     {
-        textTime.text = GameSessionManager.Instance.GetFormattedTime();
+        SetTime(GameSessionManager.Instance.ElapsedTime);
     }
 
     public void SetTime(float time)
@@ -31,6 +31,6 @@ public class GameOverPanel : BasePanel
     {
         int minute = Mathf.FloorToInt(time / 60f);
         int second = Mathf.FloorToInt(time % 60f);
-        return $"存活時間 : {minute:00}:{second:00}";
+        return $"存活時間: {minute:00}:{second:00}";
     }
 }

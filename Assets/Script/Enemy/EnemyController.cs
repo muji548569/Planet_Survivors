@@ -12,8 +12,8 @@ public class EnemyController : MonoBehaviour
         Vector3 targetDir = target.position - transform.position;
         Vector3 normal = (transform.position - planet.position).normalized;
         Vector3 moveDir = Vector3.ProjectOnPlane(targetDir, normal).normalized;
-        Quaternion targetRot = Quaternion.LookRotation(moveDir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 25);
+        Quaternion targetRot = Quaternion.LookRotation(moveDir, normal);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 25 * Time.deltaTime);
         transform.position += moveDir * data.moveSpeed * Time.deltaTime; 
     }
 
