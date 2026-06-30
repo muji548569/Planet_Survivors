@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class WeaponBase
 {
     public WeaponData weaponData;
+    public int level = 1;
     public Transform owner;
     public float timer;
 
@@ -15,7 +16,7 @@ public abstract class WeaponBase
     public void Tick(float deltaTime)
     {
         timer += deltaTime;
-        if (timer > weaponData.attackInterval)
+        if (timer > GetCooldown())
         {
             Attack();
             timer = 0;
@@ -23,4 +24,5 @@ public abstract class WeaponBase
     }
 
     public abstract void Attack();
+    public abstract float GetCooldown();
 }

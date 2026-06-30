@@ -1003,6 +1003,22 @@ PrefabInstance:
       propertyPath: planet
       value: 
       objectReference: {fileID: 101487290}
+    - target: {fileID: 2834302360362579256, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: startWeapons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834302360362579256, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d6d0d0d388c4577478095a5e4930e32e, type: 2}
+    - target: {fileID: 2834302360362579256, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50f2e014910b9db4fac6d1801917bbae, type: 2}
+    - target: {fileID: 2834302360362579256, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: af92a882108156e46a7a1e10350019fe, type: 2}
     - target: {fileID: 5846108624138493941, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: m_Name
       value: Player

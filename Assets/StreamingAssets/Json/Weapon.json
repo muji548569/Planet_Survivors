@@ -1,0 +1,34 @@
+{
+    "weapons":[
+        {
+            "weaponId":"sword",
+            "levels":[
+                {"level":1,"damage":5,"cooldown":1,"range":1,"duration":1},
+                {"level":2,"damage":6,"cooldown":1,"range":1,"duration":1},
+                {"level":3,"damage":8,"cooldown":0.8,"range":1,"duration":1},
+                {"level":4,"damage":10,"cooldown":0.8,"range":1.5,"duration":1},
+                {"level":5,"damage":12,"cooldown":0.5,"range":1.5,"duration":1}
+            ]
+        },
+        {
+            "weaponId":"fireball",
+            "levels":[
+                {"level":1,"damage":8,"cooldown":5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":false},
+                {"level":2,"damage":10,"cooldown":4.5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":false},
+                {"level":3,"damage":15,"cooldown":4,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":true},
+                {"level":4,"damage":20,"cooldown":3.5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":2,"pierce":true},
+                {"level":5,"damage":30,"cooldown":3,"speed":5,"serachRadius":25,"duration":10,"projectileCount":3,"pierce":true}
+            ]
+        },
+        {
+            "weaponId":"orbit",
+            "levels":[
+                {"level":1,"damage":4,"cooldown":5,"range":2,"duration":3,"speed":20,"projectileCount":3},
+                {"level":2,"damage":5,"cooldown":4.5,"range":2.2,"duration":2.8,"speed":20,"projectileCount":3},
+                {"level":3,"damage":7,"cooldown":4,"range":2.4,"duration":2.6,"speed":20,"projectileCount":4},
+                {"level":4,"damage":10,"cooldown":3.5,"range":2.6,"duration":2.4,"speed":20,"projectileCount":5},
+                {"level":5,"damage":12,"cooldown":3,"range":2.8,"duration":2.2,"speed":20,"projectileCount":8}
+            ]
+        }
+    ]
+}

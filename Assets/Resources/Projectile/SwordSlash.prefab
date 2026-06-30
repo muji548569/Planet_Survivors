@@ -138,6 +138,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2929425121346758057, guid: 4aa9f30a28a77224ba84b2a2c334c71b, type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929425121346758057, guid: 4aa9f30a28a77224ba84b2a2c334c71b, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.3
       objectReference: {fileID: 0}

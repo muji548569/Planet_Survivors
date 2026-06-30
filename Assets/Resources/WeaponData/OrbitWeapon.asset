@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cf27942f57e7a40beb9136d481e0d8, type: 3}
   m_Name: OrbitWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponType: 2
+  weaponId: orbit
   weaponName: Orbit
-  baseDamage: 5
-  attackInterval: 5
-  attackRange: 2
-  duration: 3
-  projectileSpeed: 20
-  searchRadius: 0
-  bulletCount: 3
   weaponPrefab: {fileID: 2704648864389741086, guid: 9981f5fa39ac2d740bd5f20ce80afab3, type: 3}
   projectilePrefab: {fileID: 5195821665043879966, guid: e992fbe6dc4b8a345be71c66bcd2086e, type: 3}
+  icon: {fileID: 0}
+  description: 
