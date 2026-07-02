@@ -13,11 +13,11 @@
         {
             "weaponId":"fireball",
             "levels":[
-                {"level":1,"damage":8,"cooldown":5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":false},
-                {"level":2,"damage":10,"cooldown":4.5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":false},
-                {"level":3,"damage":15,"cooldown":4,"speed":5,"serachRadius":25,"duration":10,"projectileCount":1,"pierce":true},
-                {"level":4,"damage":20,"cooldown":3.5,"speed":5,"serachRadius":25,"duration":10,"projectileCount":2,"pierce":true},
-                {"level":5,"damage":30,"cooldown":3,"speed":5,"serachRadius":25,"duration":10,"projectileCount":3,"pierce":true}
+                {"level":1,"damage":8,"cooldown":5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":false},
+                {"level":2,"damage":10,"cooldown":4.5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":false},
+                {"level":3,"damage":15,"cooldown":4,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":true},
+                {"level":4,"damage":20,"cooldown":3.5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":2,"pierce":true},
+                {"level":5,"damage":30,"cooldown":3,"speed":5,"searchRadius":25,"duration":10,"projectileCount":3,"pierce":true}
             ]
         },
         {

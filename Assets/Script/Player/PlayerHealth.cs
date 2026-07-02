@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public event Action<bool> OnPlayerDie;
     public void TakeDamage(float damage)
     {
-        float newhp = PlayerDataManager.Instance.Data.currentHp - damage;
+        float newhp = PlayerDataManager.Instance.Data.Stat.currentHp - damage;
         PlayerDataManager.Instance.SetHealth(newhp);
         if (newhp <= 0)
         {

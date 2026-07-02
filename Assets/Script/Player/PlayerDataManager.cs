@@ -25,14 +25,14 @@ public class PlayerDataManager : MonoBehaviour
 
     public void Init()
     {
-        ResetData();
         IsInitialized = true;
+        ResetData();
     }
 
     public void ResetData()
     {
         Data = new PlayerData();
-        Data.currentHp = Data.maxHp;
+        Data.Stat.currentHp = Data.Stat.MaxHp;
 
         NotifyAll();
     }
@@ -40,7 +40,7 @@ public class PlayerDataManager : MonoBehaviour
     public void NotifyAll()
     {
         if(!IsInitialized) return;
-        OnHealthChanged?.Invoke(Data.currentHp, Data.maxHp);
+        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.MaxHp);
         OnExpChanged?.Invoke(Data.currentExp, GetExpToNextLevel());
         OnCoinChanged?.Invoke(Data.currentCoin);
         OnLevelChanged?.Invoke(Data.level);
@@ -48,8 +48,8 @@ public class PlayerDataManager : MonoBehaviour
 
     public void SetHealth(float currentHealth)
     {
-        Data.currentHp = Mathf.Clamp(currentHealth, 0, Data.maxHp);
-        OnHealthChanged?.Invoke(Data.currentHp, Data.maxHp);
+        Data.Stat.currentHp = Mathf.Clamp(currentHealth, 0, Data.Stat.MaxHp);
+        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.MaxHp);
     }
 
     public void AddExp(int amount)

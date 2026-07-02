@@ -4244,6 +4244,7 @@ GameObject:
   - component: {fileID: 1437074068}
   - component: {fileID: 1437074069}
   - component: {fileID: 1437074070}
+  - component: {fileID: 1437074071}
   m_Layer: 0
   m_Name: PersistentRoot
   m_TagString: Untagged
@@ -4334,6 +4335,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141a3d13d5229e64eb9c2517302ca72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDataManager
+--- !u!114 &1437074071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437074064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e3052b3b1d8914f86e2d2f6a663cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerConfigDataManager
 --- !u!1 &1451778697
 GameObject:
   m_ObjectHideFlags: 0

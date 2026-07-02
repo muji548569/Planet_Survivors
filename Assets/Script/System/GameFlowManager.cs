@@ -40,6 +40,8 @@ public class GameFlowManager : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync("GameScene");
         yield return operation;
         PlayerDataManager.Instance.Init();
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        player.Init(PlayerDataManager.Instance.Data);
         GameSessionManager.Instance.StartSession();
         UIManager.Instance.SwitchScreen(E_PanelType.Game);
     }
