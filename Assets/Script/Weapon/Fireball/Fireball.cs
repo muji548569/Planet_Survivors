@@ -79,7 +79,7 @@ public class Fireball : MonoBehaviour
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
-                DamageResult result = DamageCalculator.CalculatePlayerDamage(damage);
+                DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);
                 enemy.TakeDamage(result.finalDamage);
                 print($"火球武器是否爆擊: {result.isCritical}，造成: {result.finalDamage}點傷害");
 

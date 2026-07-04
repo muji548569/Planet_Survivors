@@ -19,8 +19,19 @@ public class EnemyContact : MonoBehaviour
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
         if (player != null)
         {
-            player.TakeDamage(data.contactDamage);
-            print("造成傷害");
+            DamageResult damage = DamageCalculator.CalculatePlayerReceiveDamage(data.contactDamage);
+            
+            if(damage.isDodged)
+            {
+                // TODO:閃避特效
+                print($"敵人 {data.EnemyName} 的攻擊被閃避");
+            }
+            else 
+            {
+                player.TakeDamage(damage.finalDamage);
+                print($"敵人 {data.EnemyName} 造成傷害: {damage.finalDamage}");
+                // TODO:玩家受擊特效
+            }
         }
 
         timer = data.attackCooldown;
