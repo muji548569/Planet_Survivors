@@ -43,7 +43,7 @@ public enum E_PlayerStat
     AttackSpeed,
     PickupRange,
     CritiRate,
-    CritiDamageRate,
+    CritiDamageMultiplier,
     MaxJumpTimes,
     JumpStrength,
     ExpRate,

@@ -28,7 +28,7 @@ public class PlayerStat
     public float attackSpeed = 1f;
     public float pickupRange = 1f;
     public float critiRate = 0f;
-    public float critiDamageRate = 2f;
+    public float critiDamageMultiplier = 2f;
     public int maxJumpTimes = 1;
     public float jumpStrength = 6f;
     public float expRate = 1f;

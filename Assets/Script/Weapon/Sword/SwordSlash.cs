@@ -29,8 +29,19 @@ public class SwordSlash : MonoBehaviour
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                // 計算傷害
+                DamageResult result = DamageCalculator.CalculatePlayerDamage(damage);
+                enemy.TakeDamage(result.finalDamage);
+                print($"刀劍武器是否爆擊: {result.isCritical}，造成: {result.finalDamage}點傷害");
+
+                // 如果該傷害觸發爆擊
+                if (result.isCritical)
+                {
+                    // TODO: 爆擊特效
+                }
             }
+
+            
         }
     }
 }

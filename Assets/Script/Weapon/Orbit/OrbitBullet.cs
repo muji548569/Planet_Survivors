@@ -17,7 +17,14 @@ public class OrbitBullet : MonoBehaviour
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if(enemy != null)
             {
-                enemy.TakeDamage(damage);
+                DamageResult result = DamageCalculator.CalculatePlayerDamage(damage);
+                enemy.TakeDamage(result.finalDamage);
+                print($"環繞武器是否爆擊: {result.isCritical}，造成: {result.finalDamage}點傷害");
+
+                if (result.isCritical)
+                {
+                    // TODO: 爆擊特效
+                }
             }
             
         }
