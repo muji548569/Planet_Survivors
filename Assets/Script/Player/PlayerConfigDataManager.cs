@@ -66,4 +66,86 @@ public class PlayerConfigDataManager : MonoBehaviour
 
         return playerConfigData.GetValueFloat(level);
     }
+
+    public int GetStatMaxLevel(E_PlayerStat statType)
+    {
+        if(!playerUpgradeDataDic.TryGetValue(statType, out PlayerConfigData data))
+        {
+            Debug.LogError($"沒有對應屬性: {statType}");
+            return 0;
+        }
+
+        return data.values.Count;
+    }
+
+    #region 升級系統UI
+    public Sprite GetStatIcon(E_PlayerStat statType)
+    {
+        switch (statType)
+        {
+            default:
+                Debug.LogError($"找不到對應角色數值: {statType}");
+                return null;
+            case E_PlayerStat.MaxHpFlat:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "MaxHpFlat"));
+            case E_PlayerStat.AtkMultiplier:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "AtkMultiplier"));
+            case E_PlayerStat.DefRate:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "DefRate"));
+            case E_PlayerStat.Armor:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "Armor"));
+            case E_PlayerStat.MoveSpeed:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "MoveSpeed"));
+            case E_PlayerStat.DodgeRate:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "DodgeRate"));
+            case E_PlayerStat.AttackSpeed:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "AttackSpeed"));
+            case E_PlayerStat.PickupRange:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "PickupRange"));
+            case E_PlayerStat.CritiRate:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "CritiRate"));
+            case E_PlayerStat.CritiDamageMultiplier:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "CritiDamageMultiplier"));
+            case E_PlayerStat.MaxJumpTimes:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "MaxJumpTimes"));
+            case E_PlayerStat.JumpStrength:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "JumpStrength"));
+            case E_PlayerStat.ExpRate:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "ExpRate"));
+        }
+    }
+    public string GetStatDescription(E_PlayerStat statType, int level)
+    {
+        string diff = GetUpgradeDifference(statType, level);
+        return playerUpgradeDataDic[statType].description + diff;
+    }
+
+    public string GetStatName(E_PlayerStat statType)
+    {
+        return playerUpgradeDataDic[statType].description;
+    }
+
+    private string GetUpgradeDifference(E_PlayerStat statType, int level)
+    {
+        PlayerConfigData data = playerUpgradeDataDic[statType];
+
+        float previousValue = level == 1 ? data.baseValue : data.GetValueFloat(level - 1);
+        float nextValue = data.GetValueFloat(level);
+        float diff = nextValue - previousValue;
+        
+        string sign = diff >= 0 ? "+" : "-";
+        float absDiff = Mathf.Abs(diff);
+
+        switch (data.displayType)
+        {
+            default:
+                return $"{sign} {absDiff}";
+            case E_StatValueDisplayType.Number:
+                return $"{sign} {absDiff}";
+            case E_StatValueDisplayType.Percent:
+                return $"{sign} {absDiff * 100}%";
+            
+        }
+    }
+    #endregion
 }

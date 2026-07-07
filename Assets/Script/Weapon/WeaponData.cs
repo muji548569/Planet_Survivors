@@ -31,7 +31,7 @@ public class WeaponLevelData
 [Serializable]
 public class WeaponLevelTable
 {
-    public string weaponId;
+    public E_WeaponType weaponType;
     public List<WeaponLevelData> levels;
 
 }

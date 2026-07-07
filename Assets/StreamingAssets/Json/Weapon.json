@@ -1,33 +1,183 @@
-{
-    "weapons":[
+﻿{
+    "weapons": [
         {
-            "weaponId":"sword",
-            "levels":[
-                {"level":1,"damage":5,"cooldown":1,"range":1,"duration":1},
-                {"level":2,"damage":6,"cooldown":1,"range":1,"duration":1},
-                {"level":3,"damage":8,"cooldown":0.8,"range":1,"duration":1},
-                {"level":4,"damage":10,"cooldown":0.8,"range":1.5,"duration":1},
-                {"level":5,"damage":12,"cooldown":0.5,"range":1.5,"duration":1}
+            "weaponType": 0,
+            "levels": [
+                {
+                    "level": 1,
+                    "damage": 5.0,
+                    "cooldown": 1.0,
+                    "range": 1.0,
+                    "duration": 1.0,
+                    "speed": 0.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 0,
+                    "pierce": false
+                },
+                {
+                    "level": 2,
+                    "damage": 6.0,
+                    "cooldown": 1.0,
+                    "range": 1.0,
+                    "duration": 1.0,
+                    "speed": 0.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 0,
+                    "pierce": false
+                },
+                {
+                    "level": 3,
+                    "damage": 8.0,
+                    "cooldown": 0.800000011920929,
+                    "range": 1.0,
+                    "duration": 1.0,
+                    "speed": 0.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 0,
+                    "pierce": false
+                },
+                {
+                    "level": 4,
+                    "damage": 10.0,
+                    "cooldown": 0.800000011920929,
+                    "range": 1.5,
+                    "duration": 1.0,
+                    "speed": 0.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 0,
+                    "pierce": false
+                },
+                {
+                    "level": 5,
+                    "damage": 12.0,
+                    "cooldown": 0.5,
+                    "range": 1.5,
+                    "duration": 1.0,
+                    "speed": 0.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 0,
+                    "pierce": false
+                }
             ]
         },
         {
-            "weaponId":"fireball",
-            "levels":[
-                {"level":1,"damage":8,"cooldown":5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":false},
-                {"level":2,"damage":10,"cooldown":4.5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":false},
-                {"level":3,"damage":15,"cooldown":4,"speed":5,"searchRadius":25,"duration":10,"projectileCount":1,"pierce":true},
-                {"level":4,"damage":20,"cooldown":3.5,"speed":5,"searchRadius":25,"duration":10,"projectileCount":2,"pierce":true},
-                {"level":5,"damage":30,"cooldown":3,"speed":5,"searchRadius":25,"duration":10,"projectileCount":3,"pierce":true}
+            "weaponType": 1,
+            "levels": [
+                {
+                    "level": 1,
+                    "damage": 8.0,
+                    "cooldown": 5.0,
+                    "range": 0.0,
+                    "duration": 10.0,
+                    "speed": 5.0,
+                    "searchRadius": 25.0,
+                    "projectileCount": 1,
+                    "pierce": false
+                },
+                {
+                    "level": 2,
+                    "damage": 10.0,
+                    "cooldown": 4.5,
+                    "range": 0.0,
+                    "duration": 10.0,
+                    "speed": 5.0,
+                    "searchRadius": 25.0,
+                    "projectileCount": 1,
+                    "pierce": false
+                },
+                {
+                    "level": 3,
+                    "damage": 15.0,
+                    "cooldown": 4.0,
+                    "range": 0.0,
+                    "duration": 10.0,
+                    "speed": 5.0,
+                    "searchRadius": 25.0,
+                    "projectileCount": 1,
+                    "pierce": true
+                },
+                {
+                    "level": 4,
+                    "damage": 20.0,
+                    "cooldown": 3.5,
+                    "range": 0.0,
+                    "duration": 10.0,
+                    "speed": 5.0,
+                    "searchRadius": 25.0,
+                    "projectileCount": 2,
+                    "pierce": true
+                },
+                {
+                    "level": 5,
+                    "damage": 30.0,
+                    "cooldown": 3.0,
+                    "range": 0.0,
+                    "duration": 10.0,
+                    "speed": 5.0,
+                    "searchRadius": 25.0,
+                    "projectileCount": 3,
+                    "pierce": true
+                }
             ]
         },
         {
-            "weaponId":"orbit",
-            "levels":[
-                {"level":1,"damage":4,"cooldown":5,"range":2,"duration":3,"speed":20,"projectileCount":3},
-                {"level":2,"damage":5,"cooldown":4.5,"range":2.2,"duration":2.8,"speed":20,"projectileCount":3},
-                {"level":3,"damage":7,"cooldown":4,"range":2.4,"duration":2.6,"speed":20,"projectileCount":4},
-                {"level":4,"damage":10,"cooldown":3.5,"range":2.6,"duration":2.4,"speed":20,"projectileCount":5},
-                {"level":5,"damage":12,"cooldown":3,"range":2.8,"duration":2.2,"speed":20,"projectileCount":8}
+            "weaponType": 2,
+            "levels": [
+                {
+                    "level": 1,
+                    "damage": 4.0,
+                    "cooldown": 5.0,
+                    "range": 2.0,
+                    "duration": 3.0,
+                    "speed": 20.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 3,
+                    "pierce": false
+                },
+                {
+                    "level": 2,
+                    "damage": 5.0,
+                    "cooldown": 4.5,
+                    "range": 2.200000047683716,
+                    "duration": 2.799999952316284,
+                    "speed": 20.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 3,
+                    "pierce": false
+                },
+                {
+                    "level": 3,
+                    "damage": 7.0,
+                    "cooldown": 4.0,
+                    "range": 2.4000000953674318,
+                    "duration": 2.5999999046325685,
+                    "speed": 20.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 4,
+                    "pierce": false
+                },
+                {
+                    "level": 4,
+                    "damage": 10.0,
+                    "cooldown": 3.5,
+                    "range": 2.5999999046325685,
+                    "duration": 2.4000000953674318,
+                    "speed": 20.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 5,
+                    "pierce": false
+                },
+                {
+                    "level": 5,
+                    "damage": 12.0,
+                    "cooldown": 3.0,
+                    "range": 2.799999952316284,
+                    "duration": 2.200000047683716,
+                    "speed": 20.0,
+                    "searchRadius": 0.0,
+                    "projectileCount": 8,
+                    "pierce": false
+                }
             ]
         }
     ]

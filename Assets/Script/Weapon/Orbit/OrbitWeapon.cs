@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OrbitWeapon : WeaponBase
 {
-    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponId, level);
+    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponType, level);
     public OrbitWeapon(WeaponData data, Transform owner) : base(data, owner) { }
 
     public override float GetCooldown()

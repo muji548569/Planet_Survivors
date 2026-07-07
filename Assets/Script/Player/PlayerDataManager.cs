@@ -1,11 +1,13 @@
+using NUnit.Framework;
 using System;
+using System.IO;
 using UnityEngine;
 
 public class PlayerDataManager : MonoBehaviour
 {
     public static PlayerDataManager Instance { get; private set; }
     public PlayerData Data { get; private set; }
-
+    
     public Action<float, float> OnHealthChanged;
     public Action<int, int> OnExpChanged;
     public Action<int> OnCoinChanged;
@@ -33,7 +35,10 @@ public class PlayerDataManager : MonoBehaviour
     {
         Data = new PlayerData();
         Data.Stat.currentHp = Data.Stat.MaxHp;
-
+        foreach(E_PlayerStat stat in Enum.GetValues(typeof(E_PlayerStat)))
+        {
+            Data.statLevels[stat] = 0;
+        }
         NotifyAll();
     }
 
@@ -54,7 +59,7 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddExp(int amount)
     {
-        Data.currentExp += amount;
+        Data.currentExp += Mathf.RoundToInt(amount * Data.Stat.expRate);
         // 使用while避免一次獲得大量經驗值只升一等
         while (Data.currentExp >= GetExpToNextLevel())
         {
@@ -86,8 +91,69 @@ public class PlayerDataManager : MonoBehaviour
     
         OnLevelChanged?.Invoke(Data.level);
 
-        // TODO: 觸發升級UI
-        // TODO: 暫停遊戲
-        // TODO: 顯示三選一強化
+        // 暫停遊戲
+        GamePauseManager.Instance.PauseGame();
+        // 觸發升級UI
+        UIManager.Instance.OpenPopup(E_PanelType.Upgrade);
+    }
+
+    public void ApplyStatUpgrade(E_PlayerStat statType)
+    {
+        // 得到該屬性的下一個等級
+        int nextLevel = GetNextStatLevel(statType);
+        // 紀錄升級到哪個等級
+        Data.statLevels[statType] = nextLevel;
+        // 得到該屬性該等級的數值
+        float value = PlayerConfigDataManager.Instance.GetValue(statType, nextLevel);
+        switch (statType)
+        {
+            case E_PlayerStat.MaxHpFlat:
+                Data.Stat.maxHpFlat += value;
+                Data.Stat.currentHp += value;
+                break;
+            case E_PlayerStat.AtkMultiplier:
+                Data.Stat.atkMultiplier = value;
+                break;
+            case E_PlayerStat.DefRate:
+                Data.Stat.defRate = value;
+                break;
+            case E_PlayerStat.Armor:
+                Data.Stat.armor = Mathf.RoundToInt(value);
+                break;
+            case E_PlayerStat.MoveSpeed:
+                Data.Stat.moveSpeed = value;
+                break;
+            case E_PlayerStat.DodgeRate:
+                Data.Stat.dodgeRate = value;
+                break;
+            case E_PlayerStat.AttackSpeed:
+                Data.Stat.attackSpeed = value;
+                break;
+            case E_PlayerStat.PickupRange:
+                Data.Stat.pickupRange = value;
+                break;
+            case E_PlayerStat.CritiRate:
+                Data.Stat.critiRate = value;
+                break;
+            case E_PlayerStat.CritiDamageMultiplier:
+                Data.Stat.critiDamageMultiplier = value;
+                break;
+            case E_PlayerStat.MaxJumpTimes:
+                Data.Stat.maxJumpTimes = Mathf.RoundToInt(value);   
+                break;
+            case E_PlayerStat.JumpStrength:
+                Data.Stat.jumpStrength = value;
+                break;
+            case E_PlayerStat.ExpRate:
+                Data.Stat.expRate = value;
+                break;
+        }
+
+        PlayerDataManager.Instance.NotifyAll();
+    }
+
+    public int GetNextStatLevel(E_PlayerStat statType)
+    {
+        return Data.statLevels[statType] + 1;
     }
 }

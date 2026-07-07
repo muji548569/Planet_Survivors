@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FireballWeapon : WeaponBase
 {
-    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponId, level);
+    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponType, level);
     private Transform planet;
     public FireballWeapon(WeaponData data, Transform owner, Transform planet) : base(data, owner) 
     {

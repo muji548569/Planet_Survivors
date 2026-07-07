@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,6 +12,7 @@ public class PlayerData
     public float expGrowthRate = 1.25f;
 
     public PlayerStat Stat { get; private set; } = new PlayerStat();
+    public Dictionary<E_PlayerStat, int> statLevels = new();
 }
 
 [System.Serializable]

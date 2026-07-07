@@ -25,4 +25,5 @@ public enum E_PanelType
     LevelUp,
     Setting,
     Pause,
+    Upgrade,
 }

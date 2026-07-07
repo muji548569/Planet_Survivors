@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponType: 0
   weaponId: sword
-  weaponName: Sword
+  weaponName: "\u5F4E\u5200"
   weaponPrefab: {fileID: 0}
   projectilePrefab: {fileID: 1641120144420976260, guid: eafb58a09542f9842aba9c648bdd9e9b, type: 3}
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: e6107cfa34c1c4746b96de0a1d4e220f, type: 3}
+  description: "\u5F4E\u5200"

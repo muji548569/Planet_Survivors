@@ -23,6 +23,14 @@ public abstract class WeaponBase
         }
     }
 
+    public void LevelUp()
+    {
+        level++;
+        OnLevelUp();
+    }
+
     public abstract void Attack();
     public abstract float GetCooldown();
+
+    protected virtual void OnLevelUp() { }
 }

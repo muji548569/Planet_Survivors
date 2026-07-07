@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;          // 保存玩家輸入
     private int remainJumpTimes;
     private bool isGrounded;
-    private PlayerData playerData;
+    [SerializeField] private PlayerData playerData;
 
     private void Awake()
     {

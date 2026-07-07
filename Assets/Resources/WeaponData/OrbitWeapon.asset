@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponType: 2
   weaponId: orbit
-  weaponName: Orbit
+  weaponName: "\u8056\u5178"
   weaponPrefab: {fileID: 2704648864389741086, guid: 9981f5fa39ac2d740bd5f20ce80afab3, type: 3}
   projectilePrefab: {fileID: 5195821665043879966, guid: e992fbe6dc4b8a345be71c66bcd2086e, type: 3}
-  icon: {fileID: 0}
-  description: 
+  icon: {fileID: 21300000, guid: ecbf21c4c4f294a46ba21ff45083c096, type: 3}
+  description: "\u8056\u5178"

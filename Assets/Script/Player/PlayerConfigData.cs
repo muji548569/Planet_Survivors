@@ -5,18 +5,14 @@ using UnityEngine;
 public class PlayerConfigData
 {
     public E_PlayerStat stat;
+    public float baseValue;
     public List<float> values;
-    public E_StatModifier type;
+    public E_StatValueDisplayType displayType;
     public string description;
 
     public float GetValueFloat(int level)
     {
         return values[level - 1];
-    }
-
-    public int GetValueInt(int level)
-    {
-        return (int)values[level - 1];
     }
 }
 
@@ -26,10 +22,10 @@ public class PlayerConfigDataRoot
     public List<PlayerConfigData> stats;
 }
 
-public enum E_StatModifier
+public enum E_StatValueDisplayType
 {
-    Add,
-    Set,
+    Number,
+    Percent,
 }
 
 public enum E_PlayerStat

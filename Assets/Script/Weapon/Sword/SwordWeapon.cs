@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SwordWeapon : WeaponBase
 {
-    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponId, level);
+    private WeaponLevelData currentData => WeaponDataManager.Instance.GetLevelData(weaponData.weaponType, level);
     public SwordWeapon(WeaponData data, Transform owner) : base(data, owner) { }
 
     public override float GetCooldown()
