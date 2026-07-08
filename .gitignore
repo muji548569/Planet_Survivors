@@ -101,3 +101,14 @@ InitTestScene*.unity*
 Assets/Imported
 Assets/FreeQuickEffectsVol1/
 Assets/Hovl Studio/
+
+# Microsoft Office temporary files
+~$*
+*.tmp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
