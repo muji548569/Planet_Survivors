@@ -15,6 +15,13 @@ public class SettingPanel : BasePanel
         {
             UIManager.Instance.ClosePopup(PanelType);
         });
+
+        if (AudioManager.Instance == null)
+        {
+            Debug.LogError("SettingPanel 找不到 AudioManager.Instance");
+            return;
+        }
+
         togBGMOn.onValueChanged.AddListener(AudioManager.Instance.SetBGMOn);
         togSFXOn.onValueChanged.AddListener(AudioManager.Instance.SetSFXOn);
         sliderBGM.onValueChanged.AddListener(AudioManager.Instance.SetBGMVolume);

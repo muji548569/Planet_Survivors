@@ -64,10 +64,12 @@ public class AudioManager : MonoBehaviour
     public void SetBGMVolume(float volume)
     {
         soundData.bgmVolume = Mathf.Clamp01(volume);
+        bgmSource.volume = soundData.bgmVolume;
     }
 
     public void SetSFXVolume(float volume)
     {
         soundData.sfxVolume = Mathf.Clamp01(volume);
+        sfxSource.volume = soundData.bgmVolume;
     }
 }
