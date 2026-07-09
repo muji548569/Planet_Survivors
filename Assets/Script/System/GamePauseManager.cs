@@ -5,6 +5,7 @@ public class GamePauseManager : MonoBehaviour
 {
     public static GamePauseManager Instance { get; private set; }
     public bool IsPaused { get; private set; }
+    private bool canPause;
     private PlayerInputActions inputAction;
 
     private void Awake()
@@ -18,25 +19,33 @@ public class GamePauseManager : MonoBehaviour
         inputAction = new PlayerInputActions();
     }
 
-    public void OnEnable()
+    public void EnablePause()
     {
+        canPause = true;
         inputAction.Game.Enable();
         inputAction.Game.Pause.performed += OnPause;
     }
 
-    public void OnDisable()
+    public void DisablePause()
     {
+        canPause = false;
+
+        if(IsPaused)
+            ResumeGame();
+
         inputAction.Game.Pause.performed -= OnPause;
         inputAction.Game.Disable();
     }
 
     private void OnPause(InputAction.CallbackContext context)
     {
+        if (!canPause) return;
         TogglePausePanel();
     }
 
     public void TogglePausePanel()
     {
+        if (!canPause) return;
         if (IsPaused)
         {
             ResumeGame();

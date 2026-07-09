@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
@@ -9,7 +10,18 @@ public class WeaponDataManager : MonoBehaviour
     public static WeaponDataManager Instance { get; private set; }
     private Dictionary<E_WeaponType, Dictionary<int, WeaponLevelData>> levelDataDic = new();
     [SerializeField] private List<WeaponData> weaponSODataList = new();
-    private Dictionary<E_WeaponType, WeaponData> weaponSODataDic = new(); 
+    private Dictionary<E_WeaponType, WeaponData> weaponSODataDic = new();
+    private Dictionary<string, string> fieldDisplayNames = new()
+    {
+        { "damage", "攻擊力" },
+        { "cooldown", "攻擊間隔" },
+        { "range", "攻擊範圍" },
+        { "duration", "持續時間" },
+        { "speed", "彈速" },
+        { "searchRadius", "鎖敵半徑"},
+        { "projectileCount", "子彈數量" },
+        { "pierce", "穿透" }
+    };
 
     private void Awake()
     {
@@ -34,27 +46,155 @@ public class WeaponDataManager : MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, "Json", "Weapon.json");
         if (!File.Exists(path))
         {
-            Debug.LogError($"找不到武器資料檔案: {path}");
+            Debug.LogError($"[WeaponDataManager] 找不到武器資料檔案路徑: {path}");
             return;
         }
         string jsonStr = File.ReadAllText(path);
         WeaponLevelDataTable table = JsonUtility.FromJson<WeaponLevelDataTable>(jsonStr);
+        if (table == null)
+        {
+            Debug.LogError($"[WeaponDataManager] Weapon.json 解析失敗: {path}");
+            return;
+        }
+        if (table.weapons == null || table.weapons.Count == 0)
+        {
+            Debug.LogError("[WeaponDataManager] Weapon.json 中 weapons 為空或不存在");
+            return;
+        }
 
         // 2.將武器等級資料保存到字典中
         levelDataDic = new Dictionary<E_WeaponType, Dictionary<int, WeaponLevelData>>();
         // 先遍歷所有武器
         foreach(WeaponLevelTable weaponTable in table.weapons)
         {
+            if (weaponTable == null)
+            {
+                Debug.LogError("[WeaponDataManager] Weapon.json 內有空的 weaponTable");
+                continue;
+            }
+            if (weaponTable.levels == null || weaponTable.levels.Count == 0)
+            {
+                Debug.LogError($"[WeaponDataManager] 武器 {weaponTable.weaponType} 沒有 levels 資料");
+                continue;
+            }
+
             Dictionary<int, WeaponLevelData> levelDict = new Dictionary<int, WeaponLevelData>();
             // 再遍歷該武器所有等級
             foreach(WeaponLevelData levelData in weaponTable.levels)
             {
+                if (levelData == null)
+                {
+                    Debug.LogError($"[WeaponDataManager] 武器 {weaponTable.weaponType} 有空的等級資料");
+                    continue;
+                }
+                if (levelDict.ContainsKey(levelData.level))
+                {
+                    Debug.LogError($"[WeaponDataManager] 武器 {weaponTable.weaponType} 等級重複: {levelData.level}");
+                    continue;
+                }
+                if (!IsValidLevelData(weaponTable.weaponType, levelData))
+                    continue;
+
                 // 把等級資料抓出來
                 levelDict[levelData.level] = levelData;
             }
+
+            if (levelDict.Count == 0)
+            {
+                Debug.LogError($"[WeaponDataManager] 武器 {weaponTable.weaponType} 沒有任何有效等級資料");
+                continue;
+            }
+            
             // 把武器資料抓出來
             levelDataDic[weaponTable.weaponType] = levelDict;
         }
+
+        if (levelDataDic.Count == 0)
+        {
+            Debug.LogError("[WeaponDataManager] 沒有任何武器資料成功載入");
+        }
+    }
+
+    /// <summary>
+    /// 驗證數據欄位是否合法
+    /// </summary>
+    /// <param name="weaponType"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private bool IsValidLevelData(E_WeaponType weaponType, WeaponLevelData data)
+    {
+        bool isValid = true;
+        if (data.level <= 0)
+        {
+            Debug.LogError($"[WeaponDataManager] {weaponType} level 無效: {data.level}");
+            isValid = false;
+        }
+
+        if (data.damage < 0)
+        {
+            Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} damage 不可小於 0");
+            isValid = false;
+        }
+
+        if (data.cooldown <= 0)
+        {
+            Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} cooldown 必須大於 0");
+            isValid = false;
+        }
+
+        if (data.duration < 0)
+        {
+            Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} duration 不可小於 0");
+            isValid = false;
+        }
+
+        switch (weaponType)
+        {
+            case E_WeaponType.Sword:
+                if (data.range < 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} range 不可小於 0");
+                    isValid = false;
+                }
+                break;
+            case E_WeaponType.Fireball:
+                if (data.speed < 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} speed 不可小於 0");
+                    isValid = false;
+                }
+                if (data.projectileCount <= 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} projectileCount 必須大於 0");
+                    isValid = false;
+                }
+                if(data.searchRadius <= 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} searchRadius 必須大於 0");
+                    isValid = false;
+                }
+                break;
+                
+            case E_WeaponType.Orbit:
+                if (data.range < 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} range 不可小於 0");
+                    isValid = false;
+                }
+                if (data.speed < 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} speed 不可小於 0");
+                    isValid = false;
+                }
+                if (data.projectileCount <= 0)
+                {
+                    Debug.LogError($"[WeaponDataManager] {weaponType} Lv.{data.level} projectileCount 必須大於 0");
+                    isValid = false;
+                }
+                break;
+        }
+
+        return isValid;
     }
 
     public WeaponLevelData GetLevelData(E_WeaponType weaponType, int level)
@@ -80,7 +220,7 @@ public class WeaponDataManager : MonoBehaviour
     {
         if (!weaponSODataDic.TryGetValue(weaponType, out WeaponData data))
         {
-            Debug.LogError($"找不到 WeaponData: {weaponType}");
+            Debug.LogError($"[WeaponDataManager] 找不到 WeaponData: {weaponType}");
             return null;
         }
 
@@ -89,26 +229,41 @@ public class WeaponDataManager : MonoBehaviour
 
     public int GetWeaponMaxLevel(E_WeaponType weaponType)
     {
-        return levelDataDic[weaponType].Values.Count;
+        if(!levelDataDic.TryGetValue(weaponType, out var levelDict))
+        {
+            Debug.LogError($"[WeaponDataManager] 找不到武器等級資料: {weaponType}");
+            return 0;
+        }
+
+        return levelDict.Keys.Max();
     }
 
     public Sprite GetWeaponIcon(E_WeaponType weaponType)
     {
-        return weaponSODataDic[weaponType].icon;
+        WeaponData data = GetWeaponData(weaponType);
+        return data != null ? data.icon : null;
     }
 
     public string GetWeaponName(E_WeaponType weaponType)
     {
-        return weaponSODataDic[weaponType].weaponName;
+        WeaponData data = GetWeaponData(weaponType);
+        return data != null ? data.weaponName : weaponType.ToString();
     }
 
     public string GetWeaponDescription(E_WeaponType weaponType, int level)
     {
-        if(level == 1)
-            return weaponSODataDic[weaponType].description;
+        WeaponData weaponData = GetWeaponData(weaponType);
 
-        WeaponLevelData previousData = levelDataDic[weaponType][level-1];
-        WeaponLevelData nextData = levelDataDic[weaponType][level];
+        if(weaponData == null)
+            return "";
+        if (level == 1)
+            return weaponData.description;
+
+        WeaponLevelData previousData = GetLevelData(weaponType, level - 1);
+        WeaponLevelData nextData = GetLevelData(weaponType, level);
+
+        if(previousData == null || nextData == null)
+            return weaponData.description;
 
         return GetLevelDifferenceText(previousData, nextData);
     }
@@ -182,26 +337,6 @@ public class WeaponDataManager : MonoBehaviour
     /// <returns></returns>
     public string GetFieldDisplayName(string fieldName)
     {
-        switch (fieldName)
-        {
-            default:
-                return fieldName;
-            case "damage":
-                return "攻擊力";
-            case "cooldown":
-                return "攻擊間隔";
-            case "range":
-                return "攻擊範圍";
-            case "duration":
-                return "持續時間";
-            case "speed":
-                return "彈速";
-            case "searchRadius":
-                return "鎖敵半徑";
-            case "projectileCount":
-                return "子彈數量";
-            case "pierce":
-                return "穿透";
-        }
+        return fieldDisplayNames.TryGetValue(fieldName, out var name) ? name : fieldName;
     }
 }
