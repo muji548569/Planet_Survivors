@@ -20,7 +20,20 @@ public class DropItem : MonoBehaviour
     {
         if (isAttracking) return;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, data.attractRange, playerLayer);
+        // 確保角色數值初始化完成
+        float pickupRange = 1f;
+        if (PlayerDataManager.Instance != null && 
+            PlayerDataManager.Instance.Data != null && 
+            PlayerDataManager.Instance.Data.Stat != null)
+        {
+            pickupRange = PlayerDataManager.Instance.Data.Stat.pickupRange;
+        }
+        // 計算有效吸取範圍
+        // 掉落物基礎吸取範圍 × 玩家拾取倍率
+        float effectiveAttractRange = data.attractRange * Mathf.Max(1f, pickupRange);
+
+        // 範圍檢測
+        Collider[] hits = Physics.OverlapSphere(transform.position, effectiveAttractRange, playerLayer);
         if(hits.Length > 0 )
         {
             targetPlayer = hits[0].transform;

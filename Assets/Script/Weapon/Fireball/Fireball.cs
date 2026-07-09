@@ -5,21 +5,29 @@ public class Fireball : MonoBehaviour
     private float damage;
     private Transform owner;
     private float lifetime;
-
+    
     private float moveSpeed;
     private Vector3 moveDir;
     private Transform planet;
+    private bool pierce;
 
-    public void Init(float damage, Transform owner, float lifetime, float moveSpeed, Transform planet, float searchRadius)
+    public void Init(float damage, 
+                     Transform owner, 
+                     float lifetime, 
+                     float moveSpeed, 
+                     Transform planet,
+                     Vector3 fireDir,
+                     bool pierce)
     {
         this.damage = damage;
         this.owner = owner;
         this.lifetime = lifetime;
         this.moveSpeed = moveSpeed;
         this.planet = planet;
+        this.pierce = pierce;
 
-        moveDir = FindTargetDirection(searchRadius);
-
+        moveDir = fireDir;
+        
         Destroy(this.gameObject, this.lifetime);
     }
     void Update()
@@ -35,41 +43,6 @@ public class Fireball : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
     }
 
-    /// <summary>
-    /// 計算初始目標方向
-    /// </summary>
-    /// <param name="searchRadius"></param>
-    /// <returns></returns>
-    private Vector3 FindTargetDirection(float searchRadius)
-    {
-        // 得到鎖敵範圍內的所有敵人對象
-        Collider[] hits = Physics.OverlapSphere(owner.position, searchRadius, 1 << LayerMask.NameToLayer("Enemy"));
-
-        Transform nearestEnemy = null;
-        float nearestDistance = Mathf.Infinity;
-
-        // 遍歷鎖敵範圍內的所有碰撞器
-        foreach (Collider hit in hits)
-        {
-            // 計算距離
-            float distance = Vector3.Distance(transform.position, hit.transform.position);
-            // 更新最近單位
-            if (distance < nearestDistance)
-            {
-                nearestDistance = distance;
-                nearestEnemy = hit.transform;
-            }
-        }
-
-        // 得到最近敵人的方向 
-        Vector3 rawDir = nearestEnemy == null? owner.forward : nearestEnemy.position - transform.position;
-        // 計算星球表面法向
-        Vector3 surfaceNormal = (transform.position - planet.position).normalized;
-        // 把子彈移動方向投影到星球切平面，避免子彈往星球內部或外部飛
-        Vector3 tangentDir = Vector3.ProjectOnPlane(rawDir, surfaceNormal).normalized;
-
-        return tangentDir;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -88,7 +61,9 @@ public class Fireball : MonoBehaviour
                     // TODO: 爆擊特效
                 }
             }
-            Destroy(gameObject);
+
+            if(!pierce)
+                Destroy(gameObject);
         }
     }
 }

@@ -16,7 +16,21 @@ public abstract class WeaponBase
     public void Tick(float deltaTime)
     {
         timer += deltaTime;
-        if (timer > GetCooldown())
+
+        // 確保角色數值初始化完成
+        float attackSpeed = 1f;
+        if (PlayerDataManager.Instance != null && 
+            PlayerDataManager.Instance.Data != null && 
+            PlayerDataManager.Instance.Data.Stat != null)
+        {
+            attackSpeed = PlayerDataManager.Instance.Data.Stat.attackSpeed;
+        }
+        attackSpeed = Mathf.Max(0.01f, attackSpeed);
+
+        // 計算實際武器觸發間隔
+        float effectiveCooldown = GetCooldown() / attackSpeed;
+
+        if (timer > effectiveCooldown)
         {
             Attack();
             timer = 0;
