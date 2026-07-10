@@ -17,6 +17,12 @@ public class GameFlowManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        if (GameSessionManager.Instance == null) return;
+        GameSessionManager.Instance.OnGameWin += HandleGameWin;
+    }
+
     public void QuitToMainScene()
     {
         StartCoroutine(QuitToMainSceneRoutine());
@@ -77,5 +83,11 @@ public class GameFlowManager : MonoBehaviour
             yield break;
         }
         GamePauseManager.Instance.EnablePause();
+    }
+
+    private void HandleGameWin()
+    {
+        GamePauseManager.Instance.PauseGame();
+        UIManager.Instance.OpenPopup(E_PanelType.Win);
     }
 }

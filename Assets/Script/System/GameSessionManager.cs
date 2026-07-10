@@ -8,6 +8,9 @@ public class GameSessionManager : MonoBehaviour
     public bool IsPlaying { get; private set; }
 
     public event Action<float> OnTimeChanged;
+    public event Action OnGameWin;
+
+    [SerializeField] float WinGameTime = 300f;
 
     private void Awake()
     {
@@ -23,8 +26,14 @@ public class GameSessionManager : MonoBehaviour
     void Update()
     {
         if (!IsPlaying) return;
+
         ElapsedTime += Time.deltaTime;
         OnTimeChanged?.Invoke(ElapsedTime);
+
+        if(ElapsedTime >= WinGameTime)
+        {
+            WinGame();
+        }
     }
 
     public void StartSession()
@@ -43,5 +52,12 @@ public class GameSessionManager : MonoBehaviour
         int minute = Mathf.FloorToInt(ElapsedTime / 60f);
         int second = Mathf.FloorToInt(ElapsedTime % 60f);
         return $"{minute:00}:{second:00}";
+    }
+
+    private void WinGame()
+    {
+        IsPlaying = false;
+
+        OnGameWin?.Invoke();
     }
 }
