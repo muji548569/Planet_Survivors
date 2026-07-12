@@ -86,4 +86,14 @@ public class WeaponController : MonoBehaviour
 
         return 1;
     }
+
+    public int GetWeaponLevel(E_WeaponType weaponType)
+    {
+        if (weaponDic.TryGetValue(weaponType, out WeaponBase weapon))
+        {
+            return weapon.level;
+        }
+
+        return 0;
+    }
 }

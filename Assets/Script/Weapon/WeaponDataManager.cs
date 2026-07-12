@@ -274,7 +274,7 @@ public class WeaponDataManager : MonoBehaviour
     /// <param name="previousData"></param>
     /// <param name="nextData"></param>
     /// <returns></returns>
-    public string GetLevelDifferenceText(WeaponLevelData previousData, WeaponLevelData nextData)
+    private string GetLevelDifferenceText(WeaponLevelData previousData, WeaponLevelData nextData)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -301,7 +301,7 @@ public class WeaponDataManager : MonoBehaviour
     /// 將有差異的數值變為字串
     /// </summary>
     /// <returns></returns>
-    public string GetFieldDifferenceText(string fieldName, object previousValue, object nextValue)
+    private string GetFieldDifferenceText(string fieldName, object previousValue, object nextValue)
     {
         if(previousValue is float previousFloat && nextValue is float nextFloat)
         {
@@ -335,7 +335,7 @@ public class WeaponDataManager : MonoBehaviour
     /// 將欄位名稱轉換成顯示在UI上的文字
     /// </summary>
     /// <returns></returns>
-    public string GetFieldDisplayName(string fieldName)
+    private string GetFieldDisplayName(string fieldName)
     {
         return fieldDisplayNames.TryGetValue(fieldName, out var name) ? name : fieldName;
     }

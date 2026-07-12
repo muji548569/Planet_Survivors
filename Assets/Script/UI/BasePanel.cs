@@ -26,5 +26,5 @@ public enum E_PanelType
     Setting,
     Pause,
     Upgrade,
-    Win,
+    Victory,
 }

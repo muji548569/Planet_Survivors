@@ -155,4 +155,9 @@ public class PlayerDataManager : MonoBehaviour
     {
         return Data.statLevels[statType] + 1;
     }
+
+    public int GetStatLevel(E_PlayerStat statType)
+    {
+        return Data.statLevels[statType];
+    }
 }

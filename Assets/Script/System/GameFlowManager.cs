@@ -88,6 +88,6 @@ public class GameFlowManager : MonoBehaviour
     private void HandleGameWin()
     {
         GamePauseManager.Instance.PauseGame();
-        UIManager.Instance.OpenPopup(E_PanelType.Win);
+        UIManager.Instance.OpenPopup(E_PanelType.Victory);
     }
 }
