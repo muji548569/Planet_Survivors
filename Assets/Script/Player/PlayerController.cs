@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityStrength = 20f;
     [Header("GroundCheck")]
     [SerializeField] private Transform groundCheckPoint;
-    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
 
     private Rigidbody rb;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 gravityDir;         // 重力方向 & 角色中心到星球中心的方向
     private Vector2 moveInput;          // 保存玩家輸入
     private int remainJumpTimes;
+    private bool wasGrounded;
     private bool isGrounded;
     [SerializeField] private PlayerData playerData;
 
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
         RotateToPlanet();
         Move();
     }
-
+    
     private void ApplyGravity()
     {
         // 計算重力方向
@@ -117,28 +118,55 @@ public class PlayerController : MonoBehaviour
         // 重新計算重力方向 避免按下跳躍時使用到上一幀或未更新的方向
         gravityDir = (planet.position - transform.position).normalized;
 
-        // 在地面
-        if (isGrounded)
-        {
-            remainJumpTimes = playerData.Stat.maxJumpTimes;
-        }
-        // 還有跳躍次數
-        if (remainJumpTimes > 0)
-        {
-            // 清空垂直速度 避免力的疊加
-            // 把目前速度投影到重力方向 取得現在垂直速度
-            Vector3 verticalVelocity = Vector3.Project(rb.linearVelocity, gravityDir);
-            // 清除垂直速度
-            rb.linearVelocity -= verticalVelocity;
-            // 施加往上的力
-            rb.AddForce(-gravityDir * playerData.Stat.jumpStrength, ForceMode.Impulse);
-            // 減少剩餘跳躍次數
-            remainJumpTimes--;
-        }
+        if (remainJumpTimes <= 0)
+            return;
+
+        // 清空垂直速度 避免力的疊加
+        // 把目前速度投影到重力方向 取得現在垂直速度
+        Vector3 verticalVelocity = Vector3.Project(rb.linearVelocity, gravityDir);
+        // 清除垂直速度
+        rb.linearVelocity -= verticalVelocity;
+
+        // 施加往上的力
+        rb.AddForce(-gravityDir * playerData.Stat.jumpStrength, ForceMode.Impulse);
+
+        // 減少剩餘跳躍次數
+        remainJumpTimes--;
     }
 
     private void GroundCheck()
     {
-        isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        wasGrounded = isGrounded;
+
+        isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
+
+        if (!isGrounded && wasGrounded)
+        {
+            Debug.Log("離開地面");
+        }
+
+        if (isGrounded && !wasGrounded)
+        {
+            remainJumpTimes = playerData.Stat.maxJumpTimes;
+            Debug.Log($"落地，重置跳躍次數：{remainJumpTimes}");
+        }
+    }
+
+    /// <summary>
+    /// 畫出地面檢測範圍
+    /// </summary>
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheckPoint == null)
+        {
+            return;
+        }
+
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+
+        Gizmos.DrawWireSphere(
+            groundCheckPoint.position,
+            groundCheckRadius
+        );
     }
 }
