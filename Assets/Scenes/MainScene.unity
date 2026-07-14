@@ -6351,7 +6351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9244d85df73a36419523a5a9586450a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSessionManager
-  WinGameTime: 10
+  WinGameTime: 100
 --- !u!1 &1451778697
 GameObject:
   m_ObjectHideFlags: 0

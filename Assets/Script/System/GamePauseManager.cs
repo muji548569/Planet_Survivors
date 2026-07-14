@@ -40,7 +40,34 @@ public class GamePauseManager : MonoBehaviour
     private void OnPause(InputAction.CallbackContext context)
     {
         if (!canPause) return;
-        TogglePausePanel();
+        HandleEscape();
+    }
+
+    private void HandleEscape()
+    {
+        if (!IsPaused)
+        {
+            PauseGame();
+            UIManager.Instance.OpenPopup(E_PanelType.Pause);
+            return;
+        }
+
+        E_PanelType? topPopup = UIManager.Instance.TopPopup;
+        
+        if (topPopup == null)
+        {
+            ResumeGame();
+            return;
+        }
+
+        if (topPopup != E_PanelType.Pause) 
+        {
+            UIManager.Instance.CloseTopPopup();
+            return;
+        }
+
+        UIManager.Instance.CloseTopPopup();
+        ResumeGame();
     }
 
     public void TogglePausePanel()
@@ -48,8 +75,7 @@ public class GamePauseManager : MonoBehaviour
         if (!canPause) return;
         if (IsPaused)
         {
-            ResumeGame();
-            UIManager.Instance.ClosePopup(E_PanelType.Pause);
+            ClosePausePanelAndResume();
         }
         else
         {
@@ -57,6 +83,15 @@ public class GamePauseManager : MonoBehaviour
             UIManager.Instance.OpenPopup(E_PanelType.Pause);
         }
             
+    }
+
+    private void ClosePausePanelAndResume()
+    {
+        while (UIManager.Instance.HasPopup)
+        {
+            UIManager.Instance.CloseTopPopup();
+        }
+        ResumeGame();
     }
 
     public void PauseGame()
