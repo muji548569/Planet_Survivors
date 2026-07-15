@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform planet;
+    [SerializeField] private Transform cameraTransform;
     [Header("Move")]
     [SerializeField] private float rotateSpeed = 20f;
     [Header("Jump")]
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
     private bool isGrounded;
     [SerializeField] private PlayerData playerData;
+    private bool isInitialized;
 
     private void Awake()
     {
@@ -29,12 +31,33 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
 
         inputActions = new PlayerInputActions();
+
+        if (cameraTransform == null && Camera.main != null)
+        {
+            cameraTransform = Camera.main.transform;
+            Debug.Log("[PlayerController] 找不到 Main Camera。");
+        }
+        if(planet == null)
+        {
+            Debug.LogError("[PlayerController] Planet 尚未指定。");
+        }
+        if (groundCheckPoint == null)
+        {
+            Debug.LogError("[PlayerController] GroundCheckPoint 尚未指定。");
+        }
+
     }
 
     public void Init(PlayerData data)
     {
+        if (data == null)
+        {
+            Debug.LogError("[PlayerController] PlayerData 不可為 null。");
+            return;
+        }
         playerData = data;
         remainJumpTimes = playerData.Stat.maxJumpTimes;
+        isInitialized = true;   
     }
 
     private void OnEnable()
@@ -62,37 +85,94 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isInitialized) return;
+
+        UpdateGravityDir();
         GroundCheck();
         ApplyGravity();
-        RotateToPlanet();
         Move();
+        RotateToPlanet();
     }
     
-    private void ApplyGravity()
+    private void UpdateGravityDir()
     {
         // 計算重力方向
         gravityDir = (planet.position - transform.position).normalized;
+    }
+
+    private void ApplyGravity()
+    {
         // 應用重力
         rb.AddForce(gravityDir * gravityStrength, ForceMode.Acceleration);
     }
 
+    /// <summary>
+    /// 根據攝像機相對位置獲取移動方向
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetCameraRelativeMoveDirection()
+    {
+        if (cameraTransform == null)
+        {
+            return Vector3.zero;
+        }
+
+        Vector3 planetUp = -gravityDir;
+
+        // 將攝像機方向投影到角色所在地的星球切線平面
+        Vector3 cameraForward = Vector3.ProjectOnPlane(cameraTransform.forward, planetUp);
+        if (cameraForward.sqrMagnitude < 0.001f)
+        {
+            cameraForward = Vector3.ProjectOnPlane(transform.forward, planetUp).normalized;
+        }
+        if (cameraForward.sqrMagnitude < 0.001f)
+        {
+            cameraForward = Vector3.zero;
+        }
+        cameraForward.Normalize();
+
+        // 由目前球面 Up 和畫面 Forward 建立穩定的右方向
+        Vector3 cameraRight = Vector3.Cross(planetUp, cameraForward).normalized;
+
+        // 根據輸入組合移動方向
+        Vector3 moveDir = cameraForward * moveInput.y + cameraRight * moveInput.x;
+
+        return moveDir.normalized;
+    }
+
     private void RotateToPlanet()
     {
-        // 計算面朝方向
-        Vector3 forward = Vector3.ProjectOnPlane(transform.forward, gravityDir);
+        Vector3 planetUp = -gravityDir;
+        Vector3 moveDir = GetCameraRelativeMoveDirection();
+        
+        Vector3 targetForward;
+        if (moveDir.sqrMagnitude > 0.001f)
+        {
+            // 有輸入時朝移動方向旋轉
+            targetForward = moveDir;
+        }
+        else
+        {
+            // 沒有輸入時維持目前方向，但仍貼合星球表面
+            targetForward = Vector3.ProjectOnPlane(transform.forward, planetUp).normalized;
+        }
+
+        if(targetForward.sqrMagnitude < 0.001f)
+            return;
+
         // 計算旋轉量
-        Quaternion targetRotation = Quaternion.LookRotation(forward, -gravityDir);
+        Quaternion targetRotation = Quaternion.LookRotation(targetForward, planetUp);
         // 應用旋轉
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime);
+        rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime));
     }
 
     private void Move()
     {
         // 計算移動方向
-        Vector3 moveDir = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
+        Vector3 moveDir = GetCameraRelativeMoveDirection();
         // 計算水平方向的力
         Vector3 targetVelocity = moveDir * playerData.Stat.moveSpeed;
-        // 計算垂直方向有的力
+        // 保留朝向或遠離星球中心的垂直速度
         Vector3 verticalVelocity = Vector3.Project(rb.linearVelocity, gravityDir);
         // 剛體加力
         rb.linearVelocity = targetVelocity + verticalVelocity;
