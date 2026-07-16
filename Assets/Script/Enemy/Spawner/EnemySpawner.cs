@@ -6,7 +6,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Transform planet;
     [Header("Spawn Setting")]
-    [SerializeField] private float planetRadius = 50f;
+    [SerializeField] private float planetRadius = 50f;  // 星球半徑
+    [SerializeField] private float enemySurfaceOffset = 0.5f;
     public void Spawn(SpawnEvent spawnEvent, int index)
     {
         if(player == null || planet == null) return;
@@ -15,10 +16,10 @@ public class EnemySpawner : MonoBehaviour
         switch (spawnEvent.waveType)
         {
             case E_WaveType.RandomBackside:
-                SpawnRandomBackside(spawnEvent.enemyPrefab, spawnEvent.spawnSpread);
+                SpawnRandomBackside(spawnEvent.enemyPrefab, spawnEvent.backsideConeAngle);
                 break;
             case E_WaveType.Circle:
-                SpawnCircle(spawnEvent.enemyPrefab, spawnEvent.spawnCount, index, spawnEvent.spawnSpread);
+                SpawnCircle(spawnEvent.enemyPrefab, spawnEvent.spawnCount, index, spawnEvent.ringAngleFromPlayer);
                 break;
         }
     }
@@ -27,70 +28,104 @@ public class EnemySpawner : MonoBehaviour
     /// 在相對玩家的星球背面附近生成敵人
     /// </summary>
     /// <param name="enemyPrefab"></param>
-    private void SpawnRandomBackside(GameObject enemyPrefab, float spawnSpread)
+    /// <param name="maxAngleFromBackside">相對背面的最大偏移角度 0°在正背面 20°會生成在背面周圍20°範圍內 90°會在背面半圓內生成 180°整個球面都可能生成</param>
+    private void SpawnRandomBackside(GameObject enemyPrefab, float maxAngleFromBackside)
     {
         // 玩家方向
         Vector3 playerDir = (player.position - planet.position).normalized;
         // 星球背面方向
         Vector3 backDir = -playerDir;
         // 給背面方向添加一些隨機量
-        Vector3 spawnDir = (backDir + Random.insideUnitSphere *  spawnSpread).normalized;
+        Vector3 spawnDir = GetRandomDirectionInCone(backDir, maxAngleFromBackside);
 
-        // 將方向轉換成星球表面座標
-        Vector3 spawnPos = planet.position + spawnDir * planetRadius;
-        // 將敵人up方向朝向星球外側
-        Quaternion spawmRot = Quaternion.FromToRotation(Vector3.up, spawnDir);
-        
-        // 生成敵人
-        GameObject obj = Instantiate(enemyPrefab, spawnPos, spawmRot);
-        EnemyController enemy = obj.GetComponent<EnemyController>();
-        enemy.Init(planet, player);
+        SpawnEnemy(enemyPrefab, spawnDir);
     }
 
     /// <summary>
-    /// 在相對玩家的星球背面生成一個圓環波次敵人
+    /// 在球面指定緯度生成一圈敵人
     /// </summary>
     /// <param name="enemyPrefab"></param>
-    /// <param name="count"></param>
-    /// <param name="index"></param>
-    private void SpawnCircle(GameObject enemyPrefab, int count, int index, float spawnSpread)
+    /// <param name="count">總生成數量</param>
+    /// <param name="index">生成索引(第幾個)</param>
+    /// <param name="ringAngleFromPlayer">圓環生成位置 0°在角色位置 90°在半圓處 180°在球體背面 </param>
+    private void SpawnCircle(GameObject enemyPrefab, int count, int index, float ringAngleFromPlayer)
     {
-        // 玩家方向
+        if (count <= 0) return;
+
+        // 將玩家所在位置視為北極方向
         Vector3 playerDir = (player.position - planet.position).normalized;
 
-        // 圓環中心方向 (相對玩家的星球背面)
-        Vector3 centerDir = -playerDir;
+        // 取得垂直於playerDir的兩條切線
+        GetTangentAxes(playerDir, out Vector3 axisA, out Vector3 axisB);
 
-        // 求以中心方向為法向的平面在星球上的切面
-        // 求第一條切線
-        Vector3 axisA = Vector3.Cross(centerDir, Vector3.up);
+        // 敵人在圓環上的水平角度
+        float azimuth = Mathf.PI * 2f * index / count;
 
-        // 避免與 Up 平行造成 Cross 結果為零
-        if(axisA == Vector3.zero)
-        {
-            axisA = Vector3.Cross(centerDir, Vector3.right);
-        }
+        // 相對玩家方向的球面角度
+        float polarAngle = Mathf.Clamp(ringAngleFromPlayer, 0f, 180f) * Mathf.Deg2Rad;
 
-        // 求第二條切線
-        Vector3 axisB = Vector3.Cross(centerDir, axisA);
+        // 圓環上的切線方向
+        Vector3 ringDir = axisA * Mathf.Cos(azimuth) + axisB * Mathf.Sin(azimuth);
 
-        // 計算怪物在圓環上的角度
-        float angle = 360 / count * index;
+        // 使用球面座標計算方向
+        Vector3 spawnDir = playerDir * Mathf.Cos(polarAngle) + ringDir * Mathf.Sin(polarAngle);
 
-        // 計算圓環上的方向
-        Vector3 circleDir = centerDir 
-                            + axisA * Mathf.Cos(angle * Mathf.Deg2Rad) * spawnSpread
-                            + axisB * Mathf.Sin(angle * Mathf.Deg2Rad) * spawnSpread;
+        spawnDir.Normalize();
 
-        circleDir.Normalize();
+        SpawnEnemy(enemyPrefab, spawnDir);
+    }
 
-        // 投影到星球表面
-        Vector3 spawnPos = planet.position + circleDir * planetRadius;
+    /// <summary>
+    /// 取得相對玩家星球背面的隨機偏移角度
+    /// </summary>
+    /// <param name="centerDir"></param>
+    /// <param name="maxAngle"></param>
+    /// <returns></returns>
+    private Vector3 GetRandomDirectionInCone(Vector3 centerDir, float maxAngle) 
+    {
+        GetTangentAxes(centerDir, out Vector3 axisA, out Vector3 axisB);
+
+        float maxAngleRad = Mathf.Clamp(maxAngle, 0f, 180f) * Mathf.Deg2Rad;
+
+        // 在球面圓錐範圍內均勻取樣
+        float cosTheta = Mathf.Lerp(1f, Mathf.Cos(maxAngleRad), Random.value);
+        float sinTheta = Mathf.Sqrt(Mathf.Max(0, 1f - cosTheta*cosTheta));
+        // 方位角
+        float azimuth = Random.Range(0, Mathf.PI * 2f);
+        Vector3 tangentDir = axisA * Mathf.Cos(azimuth) + axisB * Mathf.Sin(azimuth);
+
+        return (centerDir * cosTheta + tangentDir * sinTheta).normalized;
+    }
+
+    /// <summary>
+    /// 計算切線
+    /// </summary>
+    /// <param name="normal"></param>
+    /// <param name="axisA"></param>
+    /// <param name="axisB"></param>
+    private void GetTangentAxes(Vector3 normal, out Vector3 axisA, out Vector3 axisB)
+    {
+        // 避免 normal 和 Vector3.up 平行
+        Vector3 reference = Mathf.Abs(Vector3.Dot(normal, Vector3.up)) > 0.99f 
+                            ? Vector3.right 
+                            : Vector3.up;
+
+        axisA = Vector3.Cross(normal, reference).normalized;
+        axisB = Vector3.Cross(normal, axisA).normalized;
+    }
+
+    private void SpawnEnemy(GameObject enemyPrefab, Vector3 spawnDir)
+    {
+        spawnDir.Normalize();
         // 將敵人up方向朝向星球外側
-        Quaternion spawmRot = Quaternion.FromToRotation(Vector3.up, circleDir);
+        Quaternion spawnRot = Quaternion.FromToRotation(Vector3.up, spawnDir);
 
-        GameObject obj = Instantiate(enemyPrefab, spawnPos, spawmRot);
-        EnemyController enemy = obj.GetComponent<EnemyController>();
-        enemy.Init(planet, player);
+        Vector3 spawnPos = planet.position + spawnDir * (planetRadius + enemySurfaceOffset);
+
+        GameObject obj = Instantiate(enemyPrefab, spawnPos, spawnRot);
+        if (obj.TryGetComponent<EnemyController>(out EnemyController enemy))
+        {
+            enemy.Init(planet, player);
+        }
     }
 }
