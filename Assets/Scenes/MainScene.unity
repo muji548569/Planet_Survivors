@@ -6218,6 +6218,8 @@ GameObject:
   - component: {fileID: 1437074071}
   - component: {fileID: 1437074072}
   - component: {fileID: 1437074068}
+  - component: {fileID: 1437074074}
+  - component: {fileID: 1437074075}
   m_Layer: 0
   m_Name: PersistentRoot
   m_TagString: Untagged
@@ -6258,7 +6260,7 @@ Transform:
   m_GameObject: {fileID: 1437074064}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 786.3194, y: 586.67236, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6352,6 +6354,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSessionManager
   WinGameTime: 100
+--- !u!114 &1437074074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437074064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e712f9bd45af03c4986ff4583ab05a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  defaultCapacity: 10
+  defaultMaxSize: 100
+--- !u!114 &1437074075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437074064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498a8b300f0a7b8468765fba1dd94977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GamePoolInstaller
+  entries:
+  - prefab: {fileID: 2227544548701127014, guid: dcd873a588ffb974a96658c432b3fd4f, type: 3}
+    count: 10
+  - prefab: {fileID: 7566541453131500546, guid: 502c55d9f03d8844d81e368e188eb4aa, type: 3}
+    count: 200
 --- !u!1 &1451778697
 GameObject:
   m_ObjectHideFlags: 0

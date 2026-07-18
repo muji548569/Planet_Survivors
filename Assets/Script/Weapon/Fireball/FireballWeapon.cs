@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class FireballWeapon : WeaponBase
 {
@@ -24,17 +23,12 @@ public class FireballWeapon : WeaponBase
         
         for (int i = 0; i < count; i++)
         {
-            float offset = 0f;
-
-            if (i > 0)
-            {
-                offset = spreadAngle * (i - (count - 1) / 2f);
-            }
+            float offset = spreadAngle * (i - (count - 1) / 2f);
 
             Vector3 fireDir = Quaternion.AngleAxis(offset, surfaceNormal) * baseDir;
-           
-            GameObject hitbox = Object.Instantiate(weaponData.projectilePrefab, owner.position, owner.rotation);
-            Fireball fireball = hitbox.GetComponent<Fireball>();
+
+            PoolableObject poolable = PoolManager.Instance.Get(weaponData.projectilePrefab, owner.position, Quaternion.LookRotation(fireDir, surfaceNormal)); ;
+            Fireball fireball = poolable.GetComponent<Fireball>();
             fireball.Init(currentData.damage, owner, currentData.duration, currentData.speed, planet, fireDir, currentData.pierce);
         }
     }

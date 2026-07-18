@@ -83,6 +83,9 @@ public class GameFlowManager : MonoBehaviour
             yield break;
         }
         GamePauseManager.Instance.EnablePause();
+
+        GamePoolInstaller installer = GetComponent<GamePoolInstaller>();
+        installer?.Install();
     }
 
     private void HandleGameWin()

@@ -756,6 +756,7 @@ MonoBehaviour:
   player: {fileID: 820516321}
   planet: {fileID: 101487290}
   planetRadius: 50
+  enemySurfaceOffset: 0.5
 --- !u!114 &1635444067
 MonoBehaviour:
   m_ObjectHideFlags: 0

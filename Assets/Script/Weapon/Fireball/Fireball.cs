@@ -1,46 +1,68 @@
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Fireball : MonoBehaviour,IPoolable
 {
+    private PoolableObject poolable;
+
     private float damage;
-    private Transform owner;
-    private float lifetime;
-    
+    private float remainDuration;
     private float moveSpeed;
     private Vector3 moveDir;
-    private Transform planet;
     private bool pierce;
+
+    private Transform owner;
+    private Transform planet;
+    private float surfaceRadius;
+
+    private void Awake()
+    {
+        poolable = GetComponent<PoolableObject>();
+    }
 
     public void Init(float damage, 
                      Transform owner, 
-                     float lifetime, 
+                     float duration, 
                      float moveSpeed, 
                      Transform planet,
-                     Vector3 fireDir,
+                     Vector3 moveDir,
                      bool pierce)
     {
         this.damage = damage;
         this.owner = owner;
-        this.lifetime = lifetime;
+        this.remainDuration = duration;
         this.moveSpeed = moveSpeed;
         this.planet = planet;
+        this.moveDir = moveDir;
         this.pierce = pierce;
 
-        moveDir = fireDir;
-        
-        Destroy(this.gameObject, this.lifetime);
+        // 保存生成時角色中心與星球中心的距離
+        surfaceRadius = Vector3.Distance(transform.position, planet.position);
     }
+
     void Update()
     {
+        remainDuration -= Time.deltaTime;
+        if(remainDuration <= 0 )
+        {
+            poolable.Release();
+            return;
+        }
+
         // 每幀重新修正方向 讓子彈切星球平面位移
         Vector3 surfaceNormal = (transform.position - planet.position).normalized;
+        // 根據跟星球的法向量 得出切線方向(也就是前進方向)
         moveDir = Vector3.ProjectOnPlane(moveDir, surfaceNormal).normalized;
-
-        // 每幀更新計算出的位置跟旋轉
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
-
-        if(moveDir!=Vector3.zero) 
-            transform.rotation = Quaternion.LookRotation(moveDir, transform.up);
+        // 計算下一幀的位置
+        Vector3 nextPosition = transform.position + moveDir * moveSpeed * Time.deltaTime;
+        // 計算下一幀跟星球的法向量
+        Vector3 nextNormal = (nextPosition - planet.position).normalized;
+        // 應用新的位置 球面上高度用 nextNormal * surfaceRadius 綁定在初始化時的高度
+        transform.position = planet.position + nextNormal * surfaceRadius;
+        // 根據下一幀的法向量 計算切線方向
+        moveDir = Vector3.ProjectOnPlane(moveDir, nextNormal).normalized;
+        // 應用新的移動方向
+        if(moveDir.sqrMagnitude > 0.0001f) 
+            transform.rotation = Quaternion.LookRotation(moveDir, nextNormal);
     }
 
 
@@ -63,7 +85,23 @@ public class Fireball : MonoBehaviour
             }
 
             if(!pierce)
-                Destroy(gameObject);
+                poolable.Release();
         }
+    }
+
+    public void OnSpawnFromPool()
+    {
+        // Init 會在取出後重新填入資料 這裡就不需要填
+    }
+
+    public void OnReturnToPool()
+    {
+        damage = 0f;
+        remainDuration = 0f;
+        moveSpeed = 0f;
+        moveDir = Vector3.zero;
+        pierce = false;
+        owner = null;
+        planet = null;
     }
 }
