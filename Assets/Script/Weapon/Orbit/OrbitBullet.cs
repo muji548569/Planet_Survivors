@@ -14,7 +14,7 @@ public class OrbitBullet : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
             if(enemy != null)
             {
                 DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);

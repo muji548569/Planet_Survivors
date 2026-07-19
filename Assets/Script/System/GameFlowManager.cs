@@ -35,9 +35,14 @@ public class GameFlowManager : MonoBehaviour
 
     private IEnumerator QuitToMainSceneRoutine()
     {
+        // 1.停止會生成或更新遊戲物件的系統
+        GameSessionManager.Instance.EndSession();
         GamePauseManager.Instance.DisablePause();
-
+        // 2.避免暫停狀態影響場景載入
         Time.timeScale = 1f;
+        // 3.回收 active objects，再銷毀池內物件
+        PoolManager.Instance.ClearAll();
+        // 4.切換場景
         AsyncOperation operation = SceneManager.LoadSceneAsync("MainScene");
         yield return operation;
         UIManager.Instance.SwitchScreen(E_PanelType.Start);
@@ -83,6 +88,8 @@ public class GameFlowManager : MonoBehaviour
             yield break;
         }
         GamePauseManager.Instance.EnablePause();
+
+        PoolManager.Instance?.ClearAll();
 
         GamePoolInstaller installer = GetComponent<GamePoolInstaller>();
         installer?.Install();

@@ -16,11 +16,29 @@ public class EnemyDropper : MonoBehaviour
 
             for (int i = 0; i < amount; i++)
             {
-                Vector3 offset = Random.insideUnitSphere * data.dropSpreadRadius;
-                Vector3 spawnPos = transform.position + offset;
+                Vector3 spawnPos = GetDropPosition();
 
-                Instantiate(drop.prefab, spawnPos, Quaternion.identity);
+                PoolManager.Instance.Get(drop.prefab, spawnPos, Quaternion.identity);
             }
         }
+    }
+
+    private Vector3 GetDropPosition()
+    {
+        Vector3 surfaceNormal = transform.up;
+
+        Vector3 tangentA = Vector3.Cross(surfaceNormal,
+            Mathf.Abs(Vector3.Dot(surfaceNormal, Vector3.up)) > 0.99f
+            ? Vector3.right
+            : Vector3.up).normalized;
+
+        Vector3 tangentB = Vector3.Cross(surfaceNormal, tangentA).normalized;
+
+        Vector2 randomOffset = Random.insideUnitCircle * data.dropSpreadRadius;
+
+        return transform.position 
+            + tangentA * randomOffset.x 
+            + tangentB * randomOffset.y 
+            + surfaceNormal * 0.1f;     // 讓掉落物稍微浮在表面上 避免卡進地面
     }
 }

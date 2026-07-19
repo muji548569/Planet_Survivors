@@ -122,8 +122,8 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 spawnPos = planet.position + spawnDir * (planetRadius + enemySurfaceOffset);
 
-        GameObject obj = Instantiate(enemyPrefab, spawnPos, spawnRot);
-        if (obj.TryGetComponent<EnemyController>(out EnemyController enemy))
+        PoolableObject poolable = PoolManager.Instance.Get(enemyPrefab, spawnPos, spawnRot);
+        if (poolable.TryGetComponent<EnemyController>(out EnemyController enemy))
         {
             enemy.Init(planet, player);
         }

@@ -41,7 +41,14 @@ public class Fireball : MonoBehaviour,IPoolable
 
     void Update()
     {
+        if(planet == null || owner == null)
+        {
+            poolable.Release();
+            return;
+        }
+
         remainDuration -= Time.deltaTime;
+
         if(remainDuration <= 0 )
         {
             poolable.Release();

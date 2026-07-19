@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IPoolable
 {
     [SerializeField] private EnemyData data;
     private Transform planet;
@@ -44,5 +44,20 @@ public class EnemyController : MonoBehaviour
         surfaceRadius = Vector3.Distance(
             transform.position,
             planet.position);
+    }
+
+    public void OnSpawnFromPool()
+    {
+        // 重設敵人每次生成時需要恢復的狀態
+        // 例如血量、受傷狀態、動畫、攻擊冷卻等
+    }
+
+    public void OnReturnToPool()
+    {
+        planet = null;
+        target = null;
+
+        // 不需要清除 rigidBody 的 linearVelocity 跟 angularVelocity
+        // 因為此 Rigidbody 是 Kinematic。
     }
 }

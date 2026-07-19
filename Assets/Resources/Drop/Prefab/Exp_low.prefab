@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3119596008565855711}
   - component: {fileID: 769160644703964728}
   - component: {fileID: 698623311580519287}
+  - component: {fileID: 168584446950217593}
   m_Layer: 0
   m_Name: Exp_low
   m_TagString: Untagged
@@ -73,6 +74,18 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &168584446950217593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4979377399444734632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906239d934f72dc449a1bf6c5c4a255b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolableObject
 --- !u!1001 &2699364526688607605
 PrefabInstance:
   m_ObjectHideFlags: 0

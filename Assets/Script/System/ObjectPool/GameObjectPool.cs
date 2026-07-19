@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 public class GameObjectPool
@@ -5,6 +6,8 @@ public class GameObjectPool
     private readonly GameObject prefab;
     private readonly Transform poolRoot;
     private readonly ObjectPool<PoolableObject> pool;
+    // 用於追蹤active狀態的物件
+    private readonly HashSet<PoolableObject> activeObjects = new();
 
     public GameObjectPool(GameObject prefab, Transform poolRoot, int defaultCapacity = 10, int maxSize = 100)
     {
@@ -13,7 +16,7 @@ public class GameObjectPool
 
         pool = new ObjectPool<PoolableObject>(
             createFunc: CreateObject,
-            actionOnGet: null,
+            actionOnGet: OnGetObject,
             actionOnRelease: OnReleaseObject,
             actionOnDestroy: OnDestroyObject,
             collectionCheck: true,
@@ -36,15 +39,30 @@ public class GameObjectPool
         return poolable;
     }
 
+    private void OnGetObject(PoolableObject poolable)
+    {
+        activeObjects.Add(poolable);
+    }
+
     private void OnReleaseObject(PoolableObject poolable)
     {
-        poolable.transform.SetParent(poolRoot);
+        activeObjects.Remove(poolable);
         poolable.gameObject.SetActive(false);
+
+        if(poolRoot != null)
+        {
+            poolable.transform.SetParent(poolRoot);
+        }
     }
 
     private void OnDestroyObject(PoolableObject poolable)
     {
-        Object.Destroy(poolable.gameObject);
+        activeObjects.Remove(poolable);
+
+        if (poolable != null)
+        {
+            Object.Destroy(poolable.gameObject);
+        }
     }
 
     public PoolableObject Get(Vector3 position, Quaternion rotation)
@@ -72,8 +90,25 @@ public class GameObjectPool
         }
     }
 
+    private void ReleaseAllActive()
+    {
+        // 必須要先 copy 再 release 會觸發 OnReleaseObject
+        // 裡面有 activeObjects.Remove(poolable); 
+        // 這相當於遍歷集合時修改集合，會拋出例外
+        PoolableObject[] objects = new PoolableObject[activeObjects.Count];
+        activeObjects.CopyTo(objects);
+        foreach(PoolableObject poolable in objects)
+        {
+            if(poolable != null) 
+                poolable.Release();
+        }
+
+        activeObjects.Clear();
+    }
+
     public void Clear()
     {
+        ReleaseAllActive();
         pool.Clear();
     }
 }
