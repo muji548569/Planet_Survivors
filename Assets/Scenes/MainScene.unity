@@ -6220,6 +6220,7 @@ GameObject:
   - component: {fileID: 1437074068}
   - component: {fileID: 1437074074}
   - component: {fileID: 1437074075}
+  - component: {fileID: 1437074076}
   m_Layer: 0
   m_Name: PersistentRoot
   m_TagString: Untagged
@@ -6353,7 +6354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9244d85df73a36419523a5a9586450a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSessionManager
-  WinGameTime: 30
+  WinGameTime: 120
 --- !u!114 &1437074074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6385,6 +6386,18 @@ MonoBehaviour:
     count: 10
   - prefab: {fileID: 7566541453131500546, guid: 502c55d9f03d8844d81e368e188eb4aa, type: 3}
     count: 200
+--- !u!114 &1437074076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437074064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0ac3686e9d9af4b8c0e17cb9650f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
 --- !u!1 &1451778697
 GameObject:
   m_ObjectHideFlags: 0

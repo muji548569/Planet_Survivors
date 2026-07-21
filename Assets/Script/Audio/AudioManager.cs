@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -10,7 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource sfxSource;
     [Header("SettingData")]
-    public SoundData soundData = new SoundData();
+    public AudioSaveData saveData;
 
     private void Awake()
     {
@@ -23,6 +21,18 @@ public class AudioManager : MonoBehaviour
         Instance = this;
     }
 
+    public void Init()
+    {
+        if(SaveManager.Instance == null)
+        {
+            Debug.LogError("[AudioManager] SaveManager 不存在。");
+            return;
+        }
+
+        saveData = SaveManager.Instance.Data.audio;
+        ApplySettings();
+    }
+
     public void PlayBGM(AudioClip clip, bool loop = true)
     {
         if(clip == null) return;
@@ -31,8 +41,7 @@ public class AudioManager : MonoBehaviour
 
         bgmSource.clip = clip;
         bgmSource.loop = loop;
-        bgmSource.volume = soundData.bgmVolume;
-        bgmSource.mute = !soundData.bgmOn;
+        ApplyBgmSettings();
         bgmSource.Play();
     }
 
@@ -44,32 +53,56 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         if(clip == null) return;
-        sfxSource.volume = soundData.sfxVolume;
-        sfxSource.mute = !soundData.sfxOn;
+        ApplySfxSettings();
         sfxSource.PlayOneShot(clip);
     }
 
     public void SetBGMOn(bool isOn)
     {
-        soundData.bgmOn = isOn;
-        bgmSource.mute = !isOn;
+        saveData.bgmOn = isOn;
+        ApplyBgmSettings();
+        SaveManager.Instance.Save();
     }
 
     public void SetSFXOn(bool isOn)
     {
-        soundData.sfxOn = isOn;
-        sfxSource.mute = !isOn;
+        saveData.sfxOn = isOn;
+        ApplySfxSettings();
+        SaveManager.Instance.Save();
     }
 
     public void SetBGMVolume(float volume)
     {
-        soundData.bgmVolume = Mathf.Clamp01(volume);
-        bgmSource.volume = soundData.bgmVolume;
+        saveData.bgmVolume = Mathf.Clamp01(volume);
+        ApplyBgmSettings();
     }
 
     public void SetSFXVolume(float volume)
     {
-        soundData.sfxVolume = Mathf.Clamp01(volume);
-        sfxSource.volume = soundData.bgmVolume;
+        saveData.sfxVolume = Mathf.Clamp01(volume);
+        ApplySfxSettings();
+    }
+
+    public void SaveSettings()
+    {
+        SaveManager.Instance.Save();
+    }
+
+    private void ApplySettings()
+    {
+        ApplyBgmSettings();
+        ApplySfxSettings();
+    }
+
+    private void ApplyBgmSettings()
+    {
+        bgmSource.mute = !saveData.bgmOn;
+        bgmSource.volume = saveData.bgmVolume;
+    }
+
+    private void ApplySfxSettings()
+    {
+        sfxSource.mute = !saveData.sfxOn;
+        sfxSource.volume = saveData.sfxVolume;
     }
 }

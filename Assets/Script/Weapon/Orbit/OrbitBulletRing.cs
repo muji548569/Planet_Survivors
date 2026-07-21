@@ -20,29 +20,33 @@ public class OrbitBulletRing : MonoBehaviour
         this.rotateSpeed = rotateSpeed;
         this.duration = duration;
 
+        currentAngle = 0;
+
+        // 生成時先和角色位置、方向一致
+        transform.SetPositionAndRotation(owner.position, owner.rotation);
+
         SpawnBullet();
 
         Destroy(gameObject, this.duration);
     }
 
-    void Update()
+    // 使用LateUpdate可以在角色移動、轉向處理完後再跟隨
+    void LateUpdate()
     {
         if(owner == null)
         {
             Debug.LogError("沒有owner");
             return;
-        } 
-        transform.position = owner.position;
+        }
 
         // 計算累積角度
         currentAngle += rotateSpeed * Time.deltaTime;
-        // 負責讓環跟著角色方向對齊
-        Quaternion baseRotation = Quaternion.LookRotation(owner.forward, owner.up);
-        // 負責讓環持續累積旋轉
-        Quaternion orbitRotation = Quaternion.AngleAxis(currentAngle, owner.up);
 
-        transform.rotation = baseRotation * orbitRotation;
+        // 負責讓環持續累積旋轉
+        Quaternion orbitRotation = Quaternion.AngleAxis(currentAngle, Vector3.up);
         
+        // 應用位移與旋轉 
+        transform.SetPositionAndRotation(owner.position, owner.rotation * orbitRotation);
     }
 
     public void SpawnBullet()

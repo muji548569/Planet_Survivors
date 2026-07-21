@@ -13,6 +13,7 @@ public class SettingPanel : BasePanel
     {
         btnSure.onClick.AddListener(() => 
         {
+            SaveManager.Instance.Save();
             UIManager.Instance.ClosePopup(PanelType);
         });
 
@@ -26,5 +27,10 @@ public class SettingPanel : BasePanel
         togSFXOn.onValueChanged.AddListener(AudioManager.Instance.SetSFXOn);
         sliderBGM.onValueChanged.AddListener(AudioManager.Instance.SetBGMVolume);
         sliderSFX.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+
+        togBGMOn.isOn = SaveManager.Instance.Data.audio.bgmOn;
+        togSFXOn.isOn = SaveManager.Instance.Data.audio.sfxOn;
+        sliderBGM.value = SaveManager.Instance.Data.audio.bgmVolume;
+        sliderSFX.value = SaveManager.Instance.Data.audio.sfxVolume;
     }
 }
