@@ -83,7 +83,7 @@ public class Fireball : MonoBehaviour,IPoolable
             {
                 DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);
                 enemy.TakeDamage(result.finalDamage);
-                print($"火球武器是否爆擊: {result.isCritical}，造成: {result.finalDamage}點傷害");
+                print($"火球武器是否爆擊: {result.isCritical}，對 {other.name} 造成: {result.finalDamage}點傷害");
 
                 if (result.isCritical)
                 {

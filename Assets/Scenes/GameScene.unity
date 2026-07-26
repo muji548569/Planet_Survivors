@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waveDatas:
-  - {fileID: 11400000, guid: a2a6fd68ab0585f47a317048a924cb86, type: 2}
+  - {fileID: 11400000, guid: dce1460c0af96ad40becd3a8ae9ea961, type: 2}
   enemySpawner: {fileID: 1635444066}
 --- !u!4 &1635444068
 Transform:
@@ -800,34 +800,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 320825584247314479, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 2443541407856116027, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2443541407856116027, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2443541407856116027, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2577343009827811571, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: planet
       value: 
-      objectReference: {fileID: 101487290}
+      objectReference: {fileID: 8860905232713226197, guid: ef067bbc5679a134d9bbf09e2e1dc76c, type: 3}
     - target: {fileID: 2577343009827811571, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 330585546}
-    - target: {fileID: 2577343009827811571, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      propertyPath: groundCheckRadius
-      value: 0.6
-      objectReference: {fileID: 0}
+    - target: {fileID: 4952572995859178681, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: planet
+      value: 
+      objectReference: {fileID: 101487290}
     - target: {fileID: 5023283646357611112, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: planet
       value: 
@@ -879,30 +863,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3470610579198266023, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 533354020594240295}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
---- !u!1 &533354020594240294 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3470610579198266023, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
-  m_PrefabInstance: {fileID: 533354020594240293}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &533354020594240295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533354020594240294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e1cd76237ca6c24097d31b1b875bb76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraTarget
-  player: {fileID: 820516321}
-  planet: {fileID: 101487290}
 --- !u!1001 &4734158327445480939
 PrefabInstance:
   m_ObjectHideFlags: 0

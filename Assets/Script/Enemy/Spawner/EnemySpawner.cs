@@ -123,9 +123,21 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPos = planet.position + spawnDir * (planetRadius + enemySurfaceOffset);
 
         PoolableObject poolable = PoolManager.Instance.Get(enemyPrefab, spawnPos, spawnRot);
-        if (poolable.TryGetComponent<EnemyController>(out EnemyController enemy))
+
+        InitializeEnemy(poolable);
+    }
+
+    /// <summary>
+    /// 利用 IEnemyInitializable 介面 統一初始化接口
+    /// </summary>
+    /// <param name="enemy"></param>
+    private void InitializeEnemy(PoolableObject enemy)
+    {
+        IEnemyInitializable[] initializables = enemy.GetComponents<IEnemyInitializable>();
+
+        foreach (var initializable in initializables)
         {
-            enemy.Init(planet, player);
+            initializable.Init(planet, player);
         }
     }
 }

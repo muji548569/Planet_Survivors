@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf6c7efc47fb2954fa06ee54e1a536db, type: 3}
+  m_Name: TurretEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::TurretEnemyData
+  EnemyName: turret
+  maxHealth: 10
+  moveSpeed: 0
+  contactDamage: 0
+  attackCooldown: 3
+  knockbackResistance: 0
+  drops:
+  - prefab: {fileID: 1331625538073247312, guid: 1453489e3df68994390735f9d6d5ac19, type: 3}
+    dropChance: 1
+    minAmount: 1
+    maxAmount: 1
+  - prefab: {fileID: 4979377399444734632, guid: 1e9cedcb5e2c242458bb2cae34f5f9d6, type: 3}
+    dropChance: 1
+    minAmount: 1
+    maxAmount: 2
+  dropSpreadRadius: 0.5
+  projectilePrefab: {fileID: 5938138393028141061, guid: 0148e0282ea2ff84e8919e62e3280da8, type: 3}
+  projectileSpeed: 10
+  projectileDamage: 2
+  projectileLifetime: 15

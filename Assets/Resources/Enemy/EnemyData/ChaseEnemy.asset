@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ba84e9ee98793f419ba4d8b736893df, type: 3}
-  m_Name: BasicEnemy
+  m_Name: ChaseEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  EnemyName: 
-  maxHealth: 2
+  EnemyName: Chase
+  maxHealth: 10
   moveSpeed: 3
   contactDamage: 2
   attackCooldown: 0.5

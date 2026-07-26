@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 4077541724088396495}
   - component: {fileID: 6444991993260627431}
   - component: {fileID: 5778841815845553112}
-  - component: {fileID: 2894675383201881082}
+  - component: {fileID: 6639091849169061954}
   - component: {fileID: 7473414660858663716}
   - component: {fileID: -140060868244567581}
   - component: {fileID: 996672855040275979}
   m_Layer: 8
-  m_Name: BasicEnemy
+  m_Name: ChaseEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContact
   data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
---- !u!114 &2894675383201881082
+--- !u!114 &6639091849169061954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,9 +167,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7566541453131500546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b435f24a8ccc4ac42816f35804648ed4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e40c57d87f1af146a3f64d2c51ff370, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  m_EditorClassIdentifier: Assembly-CSharp::ChaseEnemy
   data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
 --- !u!114 &7473414660858663716
 MonoBehaviour:

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IPoolable
+public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
 {
     [SerializeField] private EnemyData data;
     private Transform planet;
@@ -41,9 +41,7 @@ public class EnemyController : MonoBehaviour, IPoolable
         this.target = target;
 
         // 保存生成時角色中心與星球中心的距離
-        surfaceRadius = Vector3.Distance(
-            transform.position,
-            planet.position);
+        surfaceRadius = Vector3.Distance(transform.position, planet.position);
     }
 
     public void OnSpawnFromPool()
