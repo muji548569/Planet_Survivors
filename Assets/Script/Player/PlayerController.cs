@@ -13,9 +13,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int JumpHash = Animator.StringToHash("Jump");
 
     private Rigidbody rb;
     private PlayerInputActions inputActions;
+    
     private Vector3 gravityDir;         // 重力方向 & 角色中心到星球中心的方向
     private Vector2 moveInput;          // 保存玩家輸入
     private int remainJumpTimes;
@@ -93,7 +99,14 @@ public class PlayerController : MonoBehaviour
         Move();
         RotateToPlanet();
     }
-    
+
+    private void Update()
+    {
+        if (!isInitialized) return;
+
+        UpdateAnimation();
+    }
+
     private void UpdateGravityDir()
     {
         // 計算重力方向
@@ -212,6 +225,12 @@ public class PlayerController : MonoBehaviour
 
         // 減少剩餘跳躍次數
         remainJumpTimes--;
+
+        // 跳躍動畫條件觸發
+        if (animator != null)
+        {
+            animator.SetTrigger(JumpHash);
+        }
     }
 
     private void GroundCheck()
@@ -248,5 +267,36 @@ public class PlayerController : MonoBehaviour
             groundCheckPoint.position,
             groundCheckRadius
         );
+    }
+
+    private void UpdateAnimation()
+    {
+        if (animator == null) return;
+
+        Vector3 planetUp = -gravityDir;
+
+        Vector3 surfaceVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, planetUp);
+
+        // 如果 playerData.Stat.moveSpeed 等於 0 
+        // normalizedSpeed 就會變成無限 所以需要做檢查
+        float normalizedSpeed = 0;
+        if (playerData.Stat.moveSpeed > 0f)
+        {
+            // 正規化速度
+            normalizedSpeed = Mathf.Clamp01(surfaceVelocity.magnitude / playerData.Stat.moveSpeed);
+        }
+        else
+        {
+            normalizedSpeed = 0f;
+        }
+
+        // 參數1: 條件參數id
+        // 參數2: 設置數值
+        // 參數3: 阻尼時間
+        // 參數4: 本次經過時間
+        animator.SetFloat(SpeedHash, normalizedSpeed, 0.1f, Time.deltaTime);
+
+        // 每幀更新地面狀態
+        animator.SetBool(IsGroundedHash, isGrounded);
     }
 }

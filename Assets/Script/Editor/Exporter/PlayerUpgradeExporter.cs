@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using ExcelDataReader;
-
-public class PlayerUpgradeExporter : EditorWindow
+ 
+public static class PlayerUpgradeExporter
 {
     [MenuItem("Tools/匯出 PlayerUpgrade 設定檔")]
     public static void ExportExcelToJson()

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEditor;
 using ExcelDataReader;
 
-public class WeaponExporter : EditorWindow
+public static class WeaponExporter
 {
     [MenuItem("Tools/匯出 Weapon 設定檔")]
     public static void ExportExcelToJson()
