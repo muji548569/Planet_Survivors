@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
+public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemyDeathHandler
 {
     [SerializeField] private EnemyData data;
     private Transform planet;
     private Transform target;
     private float surfaceRadius;
+    private bool isActive;
 
     void Update()
     {
         if (target == null || planet == null) return;
-        
+        if (!isActive) return;
         Vector3 targetDir = target.position - transform.position;
         Vector3 normal = (transform.position - planet.position).normalized;
         Vector3 moveDir = Vector3.ProjectOnPlane(targetDir, normal);
@@ -40,6 +41,8 @@ public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
         this.planet = planet;
         this.target = target;
 
+        isActive = true;
+
         // 保存生成時角色中心與星球中心的距離
         surfaceRadius = Vector3.Distance(transform.position, planet.position);
     }
@@ -48,6 +51,7 @@ public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
     {
         // 重設敵人每次生成時需要恢復的狀態
         // 例如血量、受傷狀態、動畫、攻擊冷卻等
+        // 但這裡有Init()函數給外部調用 所以幾乎用不到這個函數
     }
 
     public void OnReturnToPool()
@@ -55,7 +59,13 @@ public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
         planet = null;
         target = null;
 
+        isActive = false;
         // 不需要清除 rigidBody 的 linearVelocity 跟 angularVelocity
         // 因為此 Rigidbody 是 Kinematic。
+    }
+
+    public void OnEnemyDeath()
+    {
+        isActive = false;
     }
 }

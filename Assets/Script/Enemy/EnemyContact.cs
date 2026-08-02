@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class EnemyContact : MonoBehaviour
+public class EnemyContact : MonoBehaviour, IEnemyDeathHandler, IPoolable
 {
     [SerializeField] private EnemyData data;
     private float timer;
+    private bool canAttack;
 
     // Update is called once per frame
     void Update()
@@ -15,6 +16,7 @@ public class EnemyContact : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) return;
         if (timer > 0) return;
+        if (!canAttack) return;
 
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
         if (player != null)
@@ -35,5 +37,20 @@ public class EnemyContact : MonoBehaviour
         }
 
         timer = data.attackCooldown;
+    }
+
+    public void OnEnemyDeath()
+    {
+        canAttack = false;
+    }
+
+    public void OnSpawnFromPool()
+    {
+        canAttack = true;
+    }
+
+    public void OnReturnToPool()
+    {
+        canAttack = false;
     }
 }

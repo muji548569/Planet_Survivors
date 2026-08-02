@@ -13,6 +13,7 @@ public class Fireball : MonoBehaviour,IPoolable
     private Transform owner;
     private Transform planet;
     private float surfaceRadius;
+    private bool hasHit;
 
     private void Awake()
     {
@@ -75,30 +76,36 @@ public class Fireball : MonoBehaviour,IPoolable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (hasHit) return;
+
+        if(!other.CompareTag("Enemy")) return;
+
+        // 敵人受傷邏輯
+        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+        if (enemy == null) return;
+
+        DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);
+        enemy.TakeDamage(result.finalDamage);
+        print($"火球武器是否爆擊: {result.isCritical}，對 {other.name} 造成: {result.finalDamage}點傷害");
+
+        if (result.isCritical)
         {
-            // 敵人受傷邏輯
-            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-            if (enemy != null)
-            {
-                DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);
-                enemy.TakeDamage(result.finalDamage);
-                print($"火球武器是否爆擊: {result.isCritical}，對 {other.name} 造成: {result.finalDamage}點傷害");
-
-                if (result.isCritical)
-                {
-                    // TODO: 爆擊特效
-                }
-            }
-
-            if(!pierce)
-                poolable.Release();
+            // TODO: 爆擊特效
         }
+
+        if (!pierce)
+        {
+            hasHit = true;
+            poolable.Release();
+        }
+            
     }
 
     public void OnSpawnFromPool()
     {
         // Init 會在取出後重新填入資料 這裡就不需要填
+
+        hasHit = false;
     }
 
     public void OnReturnToPool()

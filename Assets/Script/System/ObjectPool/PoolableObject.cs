@@ -41,11 +41,7 @@ public class PoolableObject : MonoBehaviour
     /// </summary>
     public void Release()
     {
-        if(isReleased)
-        {
-            Debug.LogError($"{name} 已經被回收到物件池");
-            return;
-        }
+        if(isReleased) return;
 
         isReleased = true;
 

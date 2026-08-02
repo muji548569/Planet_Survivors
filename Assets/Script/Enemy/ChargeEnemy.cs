@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
+public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemyDeathHandler
 {
     [SerializeField] private ChargeEnemyData data;  
 
@@ -13,8 +13,10 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
     private float angularSpeed;         // 角速度
     private float remainLifetime;       // 敵人剩餘存活時間
 
-    private bool isActive;              // 敵人目前是否正在執行衝刺行為
+    private bool isCharge;              // 敵人目前是否正在執行衝刺行為
     private bool hasLockedDirection;    // 敵人是否已成功鎖定衝刺方向
+
+    private bool isActive;              // 是否已死亡
 
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
     {
         this.planet = planet;
         this.target = target;
+
+        isActive = true;
 
         LookTargetRotation();
     }
@@ -69,7 +73,7 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
         // 初始化狀態
         remainLifetime = data.remainLifetime;
         hasLockedDirection = true;
-        isActive = true;
+        isCharge = true;
 
         // 立即校正朝向
         UpdateRotation(spawnNormal);
@@ -77,7 +81,7 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
 
     void Update()
     {
-        if (!isActive || !hasLockedDirection) return;
+        if (!isCharge || !hasLockedDirection || !isActive) return;
         if (planet == null) return;
 
         if (remainLifetime <= 0)
@@ -164,15 +168,17 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
     public void OnSpawnFromPool()
     {
         // 此時 EnemySpawner 可能還沒呼叫 Init 所以先保持未啟動
-        isActive = false;
+        isCharge = false;
         hasLockedDirection = false;
+        isActive = false;
         remainLifetime = 0f;
     }
 
     public void OnReturnToPool()
     {
-        isActive = false;
+        isCharge = false;
         hasLockedDirection = false;
+        isActive = false;
 
         target = null;
         planet = null;
@@ -181,4 +187,8 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable
         remainLifetime = 0f;
     }
 
+    public void OnEnemyDeath()
+    {
+        isActive = false;
+    }
 }
