@@ -30,7 +30,7 @@ MonoBehaviour:
     waveType: 1
     delay: 5
     spawnInterval: 0
-    spawnCount: 20
+    spawnCount: 10
     backsideConeAngle: 0
     ringAngleFromPlayer: 30
   - eventName: circle2
@@ -38,6 +38,6 @@ MonoBehaviour:
     waveType: 1
     delay: 15
     spawnInterval: 0
-    spawnCount: 45
+    spawnCount: 30
     backsideConeAngle: 0
     ringAngleFromPlayer: 90
