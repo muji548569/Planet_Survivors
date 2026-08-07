@@ -45,7 +45,7 @@ public class OrbitBulletRing : MonoBehaviour
         // 負責讓環持續累積旋轉
         Quaternion orbitRotation = Quaternion.AngleAxis(currentAngle, Vector3.up);
         
-        // 應用位移與旋轉 
+        // 應用位移與旋轉
         transform.SetPositionAndRotation(owner.position, owner.rotation * orbitRotation);
     }
 

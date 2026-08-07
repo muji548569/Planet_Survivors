@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 697dcc1a69e1a2c4ea5db483875ede85, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -533,13 +533,13 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.45
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.3
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -756,7 +756,7 @@ MonoBehaviour:
   player: {fileID: 820516321}
   planet: {fileID: 101487290}
   planetRadius: 50
-  enemySurfaceOffset: 0.5
+  enemySurfaceOffset: 1
 --- !u!114 &1635444067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +816,18 @@ PrefabInstance:
       propertyPath: planet
       value: 
       objectReference: {fileID: 101487290}
+    - target: {fileID: 5023283646357611112, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: af92a882108156e46a7a1e10350019fe, type: 2}
+    - target: {fileID: 5023283646357611112, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d6d0d0d388c4577478095a5e4930e32e, type: 2}
+    - target: {fileID: 5023283646357611112, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
+      propertyPath: 'startWeapons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50f2e014910b9db4fac6d1801917bbae, type: 2}
     - target: {fileID: 5846108624138493941, guid: 3421ff1f95f37e947b87186bfa579081, type: 3}
       propertyPath: m_Name
       value: Player

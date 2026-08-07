@@ -18,7 +18,7 @@ public class PlayerData
 [System.Serializable]
 public class PlayerStat
 {
-    private float baseMaxHp = 20;
+    private float baseMaxHp = 50;
     public float maxHpFlat = 0;
     public float MaxHp => baseMaxHp + maxHpFlat;
     public float currentHp;
