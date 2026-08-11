@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public bool isDead;
-    public event Action<bool> OnPlayerDie;
+    public bool IsDead { get; private set; }
+
     public void TakeDamage(float damage)
     {
+        if(IsDead) return;
         float newhp = PlayerDataManager.Instance.Data.Stat.currentHp - damage;
         PlayerDataManager.Instance.SetHealth(newhp);
+        AudioManager.Instance?.PlaySFX(E_SFX.PlayerHurt);
         if (newhp <= 0)
         {
             Die();
@@ -17,12 +19,11 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        isDead = true;
-        OnPlayerDie?.Invoke(isDead);
-        
-        GamePauseManager.Instance.PauseGame();
-        UIManager.Instance.OpenPopup(E_PanelType.GameOver);
-        GameSessionManager.Instance.EndSession();
+        if (IsDead) return;
+
+        IsDead = true;
+
+        GameSessionManager.Instance.LoseGame();
 
         gameObject.SetActive(false);
     }

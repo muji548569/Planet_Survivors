@@ -9,8 +9,9 @@ public class GameSessionManager : MonoBehaviour
 
     public event Action<float> OnTimeChanged;
     public event Action OnGameWin;
+    public event Action OnGameLose;
 
-    [SerializeField] float WinGameTime = 300f;
+    [SerializeField] private float WinGameTime = 300f;
 
     private void Awake()
     {
@@ -56,8 +57,19 @@ public class GameSessionManager : MonoBehaviour
 
     private void WinGame()
     {
+        if (!IsPlaying) return;
+
         IsPlaying = false;
 
         OnGameWin?.Invoke();
+    }
+
+    public void LoseGame()
+    {
+        if(!IsPlaying) return;
+
+        IsPlaying = false;
+
+        OnGameLose?.Invoke();
     }
 }

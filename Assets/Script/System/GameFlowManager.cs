@@ -20,7 +20,17 @@ public class GameFlowManager : MonoBehaviour
     private void Start()
     {
         if (GameSessionManager.Instance == null) return;
+
         GameSessionManager.Instance.OnGameWin += HandleGameWin;
+        GameSessionManager.Instance.OnGameLose += HandleGameLose;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameSessionManager.Instance == null) return;
+
+        GameSessionManager.Instance.OnGameWin -= HandleGameWin;
+        GameSessionManager.Instance.OnGameLose -= HandleGameLose;
     }
 
     public void QuitToMainScene()
@@ -46,6 +56,7 @@ public class GameFlowManager : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync("MainScene");
         yield return operation;
         UIManager.Instance.SwitchScreen(E_PanelType.Start);
+        AudioManager.Instance.PlayBGM(E_BGM.Menu);
     }
 
     private IEnumerator StartGameRoutine()
@@ -93,11 +104,23 @@ public class GameFlowManager : MonoBehaviour
 
         GamePoolInstaller installer = GetComponent<GamePoolInstaller>();
         installer?.Install();
+
+        AudioManager.Instance?.PlayBGM(E_BGM.Game);
+        AudioManager.Instance?.PlaySFX(E_SFX.LevelStart);
     }
 
     private void HandleGameWin()
     {
         GamePauseManager.Instance.PauseGame();
         UIManager.Instance.OpenPopup(E_PanelType.Victory);
+        AudioManager.Instance.PlayBGM(E_BGM.Victory);
+    }
+
+    private void HandleGameLose()
+    {
+        GamePauseManager.Instance.PauseGame();
+        UIManager.Instance.OpenPopup(E_PanelType.GameOver);
+        AudioManager.Instance.PlaySFX(E_SFX.PlayerDie);
+        AudioManager.Instance.PlayBGM(E_BGM.Lose);
     }
 }

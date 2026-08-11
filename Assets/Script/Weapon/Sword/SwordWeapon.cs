@@ -19,5 +19,7 @@ public class SwordWeapon : WeaponBase
         // 初始化劍氣
         SwordSlash slash = hitbox.GetComponent<SwordSlash>();
         slash.Init(currentData.damage, owner, currentData.duration);
+        
+        AudioManager.Instance.PlaySFX(E_SFX.Sword);
     }
 }

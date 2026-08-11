@@ -10,13 +10,13 @@ public class GameBootstrap : MonoBehaviour
             return;
         }
 
-        // TODO: 播放音樂
         if (AudioManager.Instance == null)
         {
             Debug.LogError("[GameBootstrap] AudioManager 不存在，無法播放音樂。");
             return;
         }
         AudioManager.Instance.Init();
+        AudioManager.Instance.PlayBGM(E_BGM.Menu);
 
         if (UIManager.Instance == null)
         {
@@ -32,8 +32,6 @@ public class GameBootstrap : MonoBehaviour
             return;
         }
         GamePauseManager.Instance.gameObject.SetActive(false);
-
-
 
     }
 }
