@@ -41,12 +41,10 @@ public class OrbitBulletRing : MonoBehaviour
 
         // 計算累積角度
         currentAngle += rotateSpeed * Time.deltaTime;
-
-        // 負責讓環持續累積旋轉
-        Quaternion orbitRotation = Quaternion.AngleAxis(currentAngle, Vector3.up);
         
-        // 應用位移與旋轉
-        transform.SetPositionAndRotation(owner.position, owner.rotation * orbitRotation);
+        // 應用位置與旋轉
+        transform.position = owner.position;
+        transform.rotation = Quaternion.AngleAxis(currentAngle, Vector3.up); ;
     }
 
     public void SpawnBullet()

@@ -17,9 +17,8 @@ MonoBehaviour:
   victoryBGM: {fileID: 8300000, guid: 1d4d71efa47d1784ab8027e26c144004, type: 3}
   loseBGM: {fileID: 8300000, guid: 60bfbedeedf6d824d9052106c716aca8, type: 3}
   levelStartSFX: {fileID: 8300000, guid: b83f31aa7f2356e42b400c59f4b91426, type: 3}
-  playerHurtSFX: {fileID: 8300000, guid: 1506a754f416575459e88d66c41858db, type: 3}
+  playerHurtSFX: {fileID: 8300000, guid: 0f035bbcade96c44b8142a4ac833e3b3, type: 3}
   playerDieSFX: {fileID: 8300000, guid: 9f21444692e5b524bbdba9d998cd752a, type: 3}
-  enemyHurtSFX: {fileID: 0}
   swordSFX: {fileID: 8300000, guid: 8d5a1a3ba0796b94ab5dc98204f2492e, type: 3}
   fireballSFX: {fileID: 8300000, guid: 60078a39519259a43b870bf0e32ac329, type: 3}
   levelUpSFX: {fileID: 8300000, guid: e34fe8066e5c0c448b03bcef4ba514f8, type: 3}

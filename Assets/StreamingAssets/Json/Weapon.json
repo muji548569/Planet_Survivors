@@ -129,7 +129,7 @@
                     "cooldown": 5.0,
                     "range": 2.0,
                     "duration": 3.0,
-                    "speed": 50.0,
+                    "speed": 80.0,
                     "searchRadius": 0.0,
                     "projectileCount": 3,
                     "pierce": false
@@ -140,7 +140,7 @@
                     "cooldown": 4.5,
                     "range": 2.200000047683716,
                     "duration": 2.799999952316284,
-                    "speed": 50.0,
+                    "speed": 80.0,
                     "searchRadius": 0.0,
                     "projectileCount": 3,
                     "pierce": false
@@ -151,7 +151,7 @@
                     "cooldown": 4.0,
                     "range": 2.4000000953674318,
                     "duration": 2.5999999046325685,
-                    "speed": 50.0,
+                    "speed": 80.0,
                     "searchRadius": 0.0,
                     "projectileCount": 4,
                     "pierce": false
@@ -162,7 +162,7 @@
                     "cooldown": 3.5,
                     "range": 2.5999999046325685,
                     "duration": 2.4000000953674318,
-                    "speed": 50.0,
+                    "speed": 80.0,
                     "searchRadius": 0.0,
                     "projectileCount": 5,
                     "pierce": false
@@ -173,7 +173,7 @@
                     "cooldown": 3.0,
                     "range": 2.799999952316284,
                     "duration": 2.200000047683716,
-                    "speed": 50.0,
+                    "speed": 80.0,
                     "searchRadius": 0.0,
                     "projectileCount": 8,
                     "pierce": false
