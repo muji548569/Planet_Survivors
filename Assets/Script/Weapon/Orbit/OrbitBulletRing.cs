@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class OrbitBulletRing : MonoBehaviour
@@ -9,7 +10,9 @@ public class OrbitBulletRing : MonoBehaviour
     private float radius;
     private float rotateSpeed;
     private float duration;
-    private float currentAngle;     // 累積角度
+
+    private Vector3 lastNormal;     // 紀錄上一幀的 surface normal
+
     public void Init(Transform owner, GameObject bulletPrefab, int bulletCount, float damage, float radius, float rotateSpeed, float duration)
     {
         this.owner = owner;
@@ -20,10 +23,11 @@ public class OrbitBulletRing : MonoBehaviour
         this.rotateSpeed = rotateSpeed;
         this.duration = duration;
 
-        currentAngle = 0;
-
         // 生成時先和角色位置、方向一致
         transform.SetPositionAndRotation(owner.position, owner.rotation);
+
+        // 記錄目前球面法線
+        lastNormal = owner.up;
 
         SpawnBullet();
 
@@ -39,12 +43,23 @@ public class OrbitBulletRing : MonoBehaviour
             return;
         }
 
-        // 計算累積角度
-        currentAngle += rotateSpeed * Time.deltaTime;
-        
-        // 應用位置與旋轉
+        // 目前角色所在的的球面法向
+        Vector3 currentNormal = owner.up;
+
+        // 旋轉只跟隨玩家在球面法向變化
+        // 算出上一幀法線轉到現在法線需要旋轉多少
+        Quaternion surfaceDelta = Quaternion.FromToRotation(lastNormal, currentNormal);
+        // 應用法向變化 (記得Quaternion相乘時 是以後乘的為基準旋轉)
+        transform.rotation = surfaceDelta * transform.rotation;
+
+        // 跟隨玩家位置
         transform.position = owner.position;
-        transform.rotation = Quaternion.AngleAxis(currentAngle, Vector3.up); ;
+
+        // orbit 自己旋轉
+        transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.Self);
+
+        // 紀錄這一幀的法線
+        lastNormal = currentNormal;
     }
 
     public void SpawnBullet()

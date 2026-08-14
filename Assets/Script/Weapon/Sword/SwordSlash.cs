@@ -21,6 +21,11 @@ public class SwordSlash : MonoBehaviour
         Destroy(gameObject, this.lifetime);
     }
 
+    private void LateUpdate()
+    {
+        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
