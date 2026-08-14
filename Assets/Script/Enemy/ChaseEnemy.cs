@@ -3,15 +3,52 @@ using UnityEngine;
 public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemyDeathHandler
 {
     [SerializeField] private EnemyData data;
+
     private Transform planet;
     private Transform target;
+
+    private EnemyKnockback knockback;
+
     private float surfaceRadius;
     private bool isActive;
+
+    private void Awake()
+    {
+        knockback = GetComponent<EnemyKnockback>();
+    }
 
     void Update()
     {
         if (target == null || planet == null) return;
         if (!isActive) return;
+
+        // 做一個簡單狀態機 當擊退速度為正數時會切換成擊退狀態 反之則是正常移動狀態
+        if(knockback.IsKnockbacking)
+        {
+            knockback.Tick();
+        }
+        else
+        {
+            UpdateMovement();
+        }
+        
+    }
+
+    public void Init(Transform planet, Transform target)
+    {
+        this.planet = planet;
+        this.target = target;
+
+        // 保存生成時角色中心與星球中心的距離
+        surfaceRadius = Vector3.Distance(transform.position, planet.position);
+        // 初始化擊退組件
+        knockback.Init(planet);
+
+        isActive = true;
+    }
+
+    private void UpdateMovement()
+    {
         Vector3 targetDir = target.position - transform.position;
         Vector3 normal = (transform.position - planet.position).normalized;
         Vector3 moveDir = Vector3.ProjectOnPlane(targetDir, normal);
@@ -20,7 +57,7 @@ public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemyD
             return;
         }
         moveDir.Normalize();
-        
+
         // 先沿目前位置的切線移動
         Vector3 nextPosition = transform.position + moveDir * data.moveSpeed * Time.deltaTime;
         // 重新計算新位置的星球法線
@@ -34,17 +71,6 @@ public class ChaseEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemyD
 
         Quaternion targetRot = Quaternion.LookRotation(nextMoveDir.normalized, nextNormal);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, 25 * Time.deltaTime);
-    }
-
-    public void Init(Transform planet, Transform target)
-    {
-        this.planet = planet;
-        this.target = target;
-
-        isActive = true;
-
-        // 保存生成時角色中心與星球中心的距離
-        surfaceRadius = Vector3.Distance(transform.position, planet.position);
     }
 
     public void OnSpawnFromPool()

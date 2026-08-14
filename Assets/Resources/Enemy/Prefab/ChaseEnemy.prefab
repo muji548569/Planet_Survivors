@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7473414660858663716}
   - component: {fileID: -140060868244567581}
   - component: {fileID: 996672855040275979}
+  - component: {fileID: 4722919828379492921}
   m_Layer: 8
   m_Name: ChaseEnemy
   m_TagString: Enemy
@@ -154,6 +155,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906239d934f72dc449a1bf6c5c4a255b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolableObject
+--- !u!114 &4722919828379492921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7566541453131500546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0628fc1051a3cb244a4237aa45a8ec17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyKnockback
+  data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
 --- !u!1001 &1133016987918069792
 PrefabInstance:
   m_ObjectHideFlags: 0

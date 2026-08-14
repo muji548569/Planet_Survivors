@@ -28,9 +28,9 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
         this.planet = planet;
         this.target = target;
 
-        isActive = true;
-
         LookTargetRotation();
+
+        isActive = true;
     }
 
     /// <summary>

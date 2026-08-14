@@ -31,7 +31,7 @@ public class SwordSlash : MonoBehaviour
             {
                 // 計算傷害
                 DamageResult result = DamageCalculator.CalculatePlayerAttackDamage(damage);
-                enemy.TakeDamage(result.finalDamage);
+                enemy.TakeDamage(result.finalDamage, owner);
                 print($"刀劍武器是否爆擊: {result.isCritical}，對 {other.name} 造成: {result.finalDamage}點傷害");
 
                 // 如果該傷害觸發爆擊

@@ -5,23 +5,29 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
     [SerializeField] private TurretEnemyData data;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float rotateSpeed;
+
     private Transform planet;
     private Transform target;
+
     private float attackTimer;
     private bool isActive;
 
+    private EnemyKnockback knockback;
     private Animator animator;
     private static readonly int AttackTriggerHash = Animator.StringToHash("Attack");
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        knockback = GetComponent<EnemyKnockback>();
     }
 
     public void Init(Transform planet, Transform target)
     {
         this.planet = planet;
         this.target = target;
+
+        knockback.Init(planet);
 
         isActive = true;
     }
@@ -30,7 +36,13 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
     {
         if (!isActive) return;
         if (planet == null || target == null) return;
-        
+
+        if (knockback.IsKnockbacking)
+        {
+            knockback.Tick();
+            return;
+        }
+
         attackTimer -= Time.deltaTime;
         if(attackTimer <= 0)
         {

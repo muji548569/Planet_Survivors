@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4088731935601445061}
   - component: {fileID: 559938621059888306}
   - component: {fileID: 4935315631025106113}
+  - component: {fileID: 5748939987369764387}
   m_Layer: 8
   m_Name: TurretEnemy
   m_TagString: Enemy
@@ -174,6 +175,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906239d934f72dc449a1bf6c5c4a255b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolableObject
+--- !u!114 &5748939987369764387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101013415425212851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0628fc1051a3cb244a4237aa45a8ec17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyKnockback
+  data: {fileID: 11400000, guid: 3bfa82fd2e4403a468a7706e447831e0, type: 2}
 --- !u!1001 &3252533399214982357
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour, IPoolable
 
     private PoolableObject poolable;
     private IEnemyDeathHandler[] deathHandlers;
+    private IKnockbackable[] knockbackables;
     
     // animator
     private Animator animator;
@@ -20,14 +21,26 @@ public class EnemyHealth : MonoBehaviour, IPoolable
         animator = GetComponentInChildren<Animator>();
 
         deathHandlers = GetComponents<IEnemyDeathHandler>();
+        knockbackables = GetComponents<IKnockbackable>();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Transform attacker)
     {
         if (isDead) return;
         if (damage <= 0) return;
 
+        // 減去生命值
         currentHealth -= damage;
+
+        // 計算擊退力度
+        float KnockbackForce = 1 - Mathf.Clamp01(data.knockbackResistance);
+        // 調用身上實作的擊退介面
+        foreach(IKnockbackable knockback in knockbackables)
+        {
+            knockback.ApplyKnockback(attacker.position, KnockbackForce);
+        }
+
+        // 生命 <= 0 調用死亡函數
         if(currentHealth <= 0)
         {
             Die();
