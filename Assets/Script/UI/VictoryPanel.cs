@@ -57,12 +57,12 @@ public class VictoryPanel : BasePanel
     {
         if (PlayerDataManager.Instance == null) 
         {
-            Debug.LogError($"[WinPanel] 找不到角色資料管理器或角色資料");
+            Debug.LogError($"[VictoryPanel] 找不到角色資料管理器或角色資料");
             return;
         }
         if (WeaponController.Instance == null)
         {
-            Debug.LogError($"[WinPanel] 找不到武器管理器或武器資料");
+            Debug.LogError($"[VictoryPanel] 找不到武器管理器或武器資料");
             return;
         }
 

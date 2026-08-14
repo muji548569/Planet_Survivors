@@ -17,9 +17,9 @@ MonoBehaviour:
   moveSpeed: 15
   contactDamage: 2
   attackCooldown: 0.5
-  knockbackResistance: 0.8
-  knockbackSpeed: 8
-  knockbackDeceleration: 30
+  knockbackResistance: 0
+  knockbackSpeed: 0
+  knockbackDeceleration: 0
   drops:
   - prefab: {fileID: 1331625538073247312, guid: 1453489e3df68994390735f9d6d5ac19, type: 3}
     dropChance: 1
