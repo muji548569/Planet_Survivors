@@ -23,7 +23,7 @@ public class SwordSlash : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+        transform.position = owner.position;
     }
 
     private void OnTriggerEnter(Collider other)
