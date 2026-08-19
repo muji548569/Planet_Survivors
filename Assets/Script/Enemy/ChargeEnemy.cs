@@ -25,12 +25,14 @@ public class ChargeEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
 
     public void Init(Transform planet, Transform target)
     {
+
         this.planet = planet;
         this.target = target;
 
         LookTargetRotation();
 
         isActive = true;
+
     }
 
     /// <summary>

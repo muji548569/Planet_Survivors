@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77eb37ef0850ac48a3289e22c06acf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChargeEnemy
-  data: {fileID: 11400000, guid: 58d91b284541dba42b2aeaa2db5b7c7f, type: 2}
+  data: {fileID: 11400000, guid: 1d7b1ecc40f14c84c92ea45d33019a50, type: 2}
 --- !u!114 &166317218765949628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b253cc0d7dd0d4ba5482dd2f8efdf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  data: {fileID: 11400000, guid: 58d91b284541dba42b2aeaa2db5b7c7f, type: 2}
+  data: {fileID: 11400000, guid: 1d7b1ecc40f14c84c92ea45d33019a50, type: 2}
 --- !u!114 &4145376904777792166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01bfce968d80a34a97531e0b057b91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContact
-  data: {fileID: 11400000, guid: 58d91b284541dba42b2aeaa2db5b7c7f, type: 2}
+  data: {fileID: 11400000, guid: 1d7b1ecc40f14c84c92ea45d33019a50, type: 2}
 --- !u!114 &1755775222224108382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018ca0ddb218451439c05c9fe0f3c8a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDropper
-  data: {fileID: 11400000, guid: 58d91b284541dba42b2aeaa2db5b7c7f, type: 2}
+  data: {fileID: 11400000, guid: 1d7b1ecc40f14c84c92ea45d33019a50, type: 2}
 --- !u!1001 &4089752122793315038
 PrefabInstance:
   m_ObjectHideFlags: 0

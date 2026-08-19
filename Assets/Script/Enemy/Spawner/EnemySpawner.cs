@@ -122,6 +122,10 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 spawnPos = planet.position + spawnDir * (planetRadius + enemySurfaceOffset);
 
+        Debug.Log(
+        $"[EnemySpawner] spawning {enemyPrefab.name} " +
+        $"at {spawnPos}");
+
         PoolableObject poolable = PoolManager.Instance.Get(enemyPrefab, spawnPos, spawnRot);
 
         InitializeEnemy(poolable);

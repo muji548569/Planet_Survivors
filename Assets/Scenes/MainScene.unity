@@ -6832,11 +6832,11 @@ RectTransform:
   m_Children:
   - {fileID: 716576870}
   - {fileID: 662635611}
-  - {fileID: 106453754}
   - {fileID: 116069017}
   - {fileID: 2082395949}
   - {fileID: 1118458804}
   - {fileID: 1545293041}
+  - {fileID: 106453754}
   m_Father: {fileID: 1437074067}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
