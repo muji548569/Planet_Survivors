@@ -89,7 +89,7 @@ public static class WeaponExporter
         if (!Directory.Exists(directory))
             Directory.CreateDirectory(directory);
 
-        File.WriteAllText(jsonOutputPath, jsonStr, Encoding.UTF8);
+        File.WriteAllText(jsonOutputPath, jsonStr, new UTF8Encoding(false));
         AssetDatabase.Refresh();
 
         Debug.Log($"Weapon JSON 匯出成功！路徑: {jsonOutputPath}");

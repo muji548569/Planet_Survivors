@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +36,8 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
+        if (WeaponDataManager.Instance == null || WeaponDataManager.Instance.LoadState != E_LoadState.Success)
+            return;
         foreach (WeaponBase weapon in weapons)
         {
             weapon.Tick(Time.deltaTime);
@@ -63,6 +66,12 @@ public class WeaponController : MonoBehaviour
 
     public void UpgradeWeapon(E_WeaponType weaponType)
     {
+        if(WeaponDataManager.Instance == null || WeaponDataManager.Instance.LoadState != E_LoadState.Success)
+        {
+            Debug.LogWarning("[WeaponController] WeaponDataManager 尚未初始化完成");
+            return;
+        }
+
         // 確定是否有該武器
         if(weaponDic.TryGetValue(weaponType, out WeaponBase weapon))
         {

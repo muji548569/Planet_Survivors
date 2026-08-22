@@ -31,9 +31,10 @@ public class FireballWeapon : WeaponBase
             Fireball fireball = poolable.GetComponent<Fireball>();
             fireball.Init(currentData.damage, owner, currentData.duration, currentData.speed, planet, fireDir, currentData.pierce);
 
-            // 播放音效
-            AudioManager.Instance.PlaySFX(E_SFX.Fireball);
         }
+
+        // 播放音效
+        AudioManager.Instance.PlaySFX(E_SFX.Fireball);
     }
 
     /// <summary>

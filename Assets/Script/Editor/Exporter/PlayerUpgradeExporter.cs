@@ -56,7 +56,7 @@ public static class PlayerUpgradeExporter
         if (!Directory.Exists(directory))
             Directory.CreateDirectory(directory);
 
-        File.WriteAllText(jsonOutputPath, jsonStr, Encoding.UTF8);
+        File.WriteAllText(jsonOutputPath, jsonStr, new UTF8Encoding(false));
         AssetDatabase.Refresh();
 
         Debug.Log($"PlayerUpgrade.json 匯出成功: {jsonOutputPath}");

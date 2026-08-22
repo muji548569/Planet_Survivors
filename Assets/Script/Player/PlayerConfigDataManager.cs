@@ -1,9 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class PlayerConfigDataManager : MonoBehaviour
 {
+    public E_LoadState LoadState { get; private set; }
     public static PlayerConfigDataManager Instance { get; private set; }
     private Dictionary<E_PlayerStat, PlayerConfigData> playerUpgradeDataDic;
 
@@ -15,43 +18,83 @@ public class PlayerConfigDataManager : MonoBehaviour
             return;
         }
         Instance = this;
-        LoadPlayerConfigData();
+        StartCoroutine(LoadPlayerConfigData());
     }
 
     /// <summary>
     /// 加載角色升級數據
     /// </summary>
-    private void LoadPlayerConfigData()
+    private IEnumerator LoadPlayerConfigData()
     {
-        string path = Path.Combine(Application.streamingAssetsPath, "Json", "PlayerUpgrade.json");
-        if (!File.Exists(path))
+        LoadState = E_LoadState.Loading;
+
+        string path = "Json/PlayerUpgrade.json";
+        string jsonStr = null;
+        bool requestFailed = false;
+
+        // 非同步獲取角色數據
+        yield return StreamingAssetLoader.LoadText(
+            path,
+            (text) => { jsonStr = text; },
+            (text) => { requestFailed = true; });
+
+        if (requestFailed || string.IsNullOrEmpty(jsonStr))
         {
-            Debug.LogError($"找不到 PlayerUpgrade.json: {path}");
-            return;
+            LoadState = E_LoadState.Failed;
+
+            Debug.LogError($"[PlayerConfigDataManager] PlayerUpgrade.json 請求失敗: {path}");
+            yield break;
         }
 
-        string jsonStr = File.ReadAllText(path);
-        PlayerConfigDataRoot root = JsonUtility.FromJson<PlayerConfigDataRoot>(jsonStr);
-        if (root == null || root.stats == null)
+        // 反序列化
+        try
         {
-            Debug.LogError("PlayerUpgrade.json 解析失敗或 stats 為空");
-            return;
-        }
-
-        playerUpgradeDataDic = new Dictionary<E_PlayerStat, PlayerConfigData>();
-        foreach(PlayerConfigData playerConfigData in root.stats)
-        {
-            if (playerUpgradeDataDic.ContainsKey(playerConfigData.stat))
+            PlayerConfigDataRoot root = JsonUtility.FromJson<PlayerConfigDataRoot>(jsonStr);
+            if (root == null || root.stats == null)
             {
-                Debug.LogWarning($"重複的角色升級資料: {playerConfigData.stat}，後者會覆蓋前者");
+                LoadState = E_LoadState.Failed;
+
+                Debug.LogError("PlayerUpgrade.json 解析失敗或 stats 為空");
+                yield break;
             }
 
-            playerUpgradeDataDic[playerConfigData.stat] = playerConfigData;
+            playerUpgradeDataDic = new Dictionary<E_PlayerStat, PlayerConfigData>();
+            foreach (PlayerConfigData playerConfigData in root.stats)
+            {
+                if (playerUpgradeDataDic.ContainsKey(playerConfigData.stat))
+                {
+                    Debug.LogWarning($"重複的角色升級資料: {playerConfigData.stat}，後者會覆蓋前者");
+                }
+
+                playerUpgradeDataDic[playerConfigData.stat] = playerConfigData;
+            }
+
+            LoadState = E_LoadState.Success;
         }
+        catch(Exception e)
+        {
+            LoadState = E_LoadState.Failed;
+
+            Debug.LogError(
+                $"[PlayerConfigDataManager] PlayerUpgrade.json 解析失敗\n" +
+                $"Path: {path}\n" +
+                $"Length: {jsonStr?.Length ?? 0}\n" +
+                $"Exception: {e}"
+            );
+
+            yield break;
+        }
+        
     }
 
     public float GetValue(E_PlayerStat stat, int level)
     {
+        if (LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 資料不可用，目前狀態: {LoadState}");
+            return 0f;
+        }
+
         if (!playerUpgradeDataDic.TryGetValue(stat, out PlayerConfigData playerConfigData))
         {
             Debug.LogError($"找不到角色升級資料: {stat}");
@@ -69,7 +112,13 @@ public class PlayerConfigDataManager : MonoBehaviour
 
     public int GetStatMaxLevel(E_PlayerStat statType)
     {
-        if(!playerUpgradeDataDic.TryGetValue(statType, out PlayerConfigData data))
+        if (LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 資料不可用，目前狀態: {LoadState}");
+            return 0;
+        }
+
+        if (!playerUpgradeDataDic.TryGetValue(statType, out PlayerConfigData data))
         {
             Debug.LogError($"沒有對應屬性: {statType}");
             return 0;
@@ -116,19 +165,46 @@ public class PlayerConfigDataManager : MonoBehaviour
     }
     public string GetStatDescription(E_PlayerStat statType, int level)
     {
-        string diff = GetUpgradeDifference(statType, level);
-        return playerUpgradeDataDic[statType].description + diff;
+        if (LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 資料不可用，目前狀態: {LoadState}");
+            return "";
+        }
+        if (!playerUpgradeDataDic.TryGetValue(statType, out PlayerConfigData data))
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 找不到角色屬性資料: {statType}");
+            return "";
+        }
+        if (level <= 0 || level > data.values.Count)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] {statType} 等級超出範圍: {level}");
+            return "";
+        }
+
+        string diff = GetUpgradeDifference(data, level);
+        return data.description + diff;
     }
 
     public string GetStatName(E_PlayerStat statType)
     {
-        return playerUpgradeDataDic[statType].description;
+        if (LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 資料不可用，目前狀態: {LoadState}");
+            return "";
+        }
+
+        if(!playerUpgradeDataDic.TryGetValue(statType, out PlayerConfigData data))
+        {
+            Debug.LogError(
+            $"[PlayerConfigDataManager] 找不到角色屬性資料: {statType}");
+            return "";
+        }
+
+        return data.description;
     }
 
-    private string GetUpgradeDifference(E_PlayerStat statType, int level)
+    private string GetUpgradeDifference(PlayerConfigData data, int level)
     {
-        PlayerConfigData data = playerUpgradeDataDic[statType];
-
         float previousValue = level == 1 ? data.baseValue : data.GetValueFloat(level - 1);
         float nextValue = data.GetValueFloat(level);
         float diff = nextValue - previousValue;

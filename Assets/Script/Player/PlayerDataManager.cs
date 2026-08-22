@@ -100,7 +100,15 @@ public class PlayerDataManager : MonoBehaviour
     {
         // 得到該屬性的下一個等級
         int nextLevel = GetNextStatLevel(statType);
-        // 紀錄升級到哪個等級
+        // 得到該屬性的最大等級
+        int maxLevel = PlayerConfigDataManager.Instance.GetStatMaxLevel(statType);
+        // 驗證資料
+        if (nextLevel > maxLevel)
+        {
+            Debug.LogWarning($"[PlayerDataManager] {statType} 已達最大等級");
+            return;
+        }
+        // 確定資料有效後才更新玩家等級
         Data.statLevels[statType] = nextLevel;
         // 得到該屬性該等級的數值
         float value = PlayerConfigDataManager.Instance.GetValue(statType, nextLevel);
