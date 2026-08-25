@@ -3,7 +3,7 @@
 A 3D survivor-like game developed with Unity, featuring spherical movement, automatic combat, character upgrades, and wave-based enemy spawning.
 
 **🎮 Play the WebGL version:**  
-[Planet Survivors on itch.io](https://muji548569.itch.io/planet-survivors)
+[Planet Survivors on itch.io](https://jupiter43115.itch.io/planet-survivors)
 
 ![Gameplay](docs/images/gameplay.png)
 
