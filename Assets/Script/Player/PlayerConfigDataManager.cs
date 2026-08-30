@@ -110,6 +110,23 @@ public class PlayerConfigDataManager : MonoBehaviour
         return playerConfigData.GetValueFloat(level);
     }
 
+    public float GetBaseValue(E_PlayerStat stat)
+    {
+        if(LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
+        {
+            Debug.LogError($"[PlayerConfigDataManager] 資料不可用，目前狀態: {LoadState}");
+            return 0f;
+        }
+
+        if(!playerUpgradeDataDic.TryGetValue(stat,out PlayerConfigData data))
+        {
+            Debug.LogError($"找不到角色升級資料: {stat}");
+            return 0f;
+        }
+
+        return data.baseValue;
+    }
+
     public int GetStatMaxLevel(E_PlayerStat statType)
     {
         if (LoadState != E_LoadState.Success || playerUpgradeDataDic == null)
@@ -135,8 +152,8 @@ public class PlayerConfigDataManager : MonoBehaviour
             default:
                 Debug.LogError($"找不到對應角色數值: {statType}");
                 return null;
-            case E_PlayerStat.MaxHpFlat:
-                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "MaxHpFlat"));
+            case E_PlayerStat.MaxHp:
+                return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "MaxHp"));
             case E_PlayerStat.AtkMultiplier:
                 return Resources.Load<Sprite>(Path.Combine("Icon", "PlayerStat", "AtkMultiplier"));
             case E_PlayerStat.DefRate:

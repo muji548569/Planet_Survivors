@@ -30,7 +30,7 @@ public enum E_StatValueDisplayType
 
 public enum E_PlayerStat
 {
-    MaxHpFlat,
+    MaxHp,
     AtkMultiplier,
     DefRate,
     Armor,

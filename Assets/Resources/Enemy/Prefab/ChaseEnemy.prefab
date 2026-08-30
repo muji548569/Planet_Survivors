@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContact
   data: {fileID: 11400000, guid: 9b54e812662ad1244beec40d1bd5c9be, type: 2}
+  contactColider: {fileID: 6142930945169302975}
 --- !u!114 &6639091849169061954
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,18 +33,22 @@ public class PlayerDataManager : MonoBehaviour
     public void ResetData()
     {
         Data = new PlayerData();
-        Data.Stat.currentHp = Data.Stat.MaxHp;
+        
         foreach(E_PlayerStat stat in Enum.GetValues(typeof(E_PlayerStat)))
         {
             Data.statLevels[stat] = 0;
+            ApplyBaseStat(stat);
         }
+
+        Data.Stat.currentHp = Data.Stat.maxHp;
+
         NotifyAll();
     }
 
     public void NotifyAll()
     {
         if(!IsInitialized) return;
-        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.MaxHp);
+        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.maxHp);
         OnExpChanged?.Invoke(Data.currentExp, GetExpToNextLevel());
         OnCoinChanged?.Invoke(Data.currentCoin);
         OnLevelChanged?.Invoke(Data.level);
@@ -52,8 +56,8 @@ public class PlayerDataManager : MonoBehaviour
 
     public void SetHealth(float currentHealth)
     {
-        Data.Stat.currentHp = Mathf.Clamp(currentHealth, 0, Data.Stat.MaxHp);
-        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.MaxHp);
+        Data.Stat.currentHp = Mathf.Clamp(currentHealth, 0, Data.Stat.maxHp);
+        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.maxHp);
     }
 
     public void AddExp(int amount)
@@ -96,6 +100,53 @@ public class PlayerDataManager : MonoBehaviour
         UIManager.Instance.OpenPopup(E_PanelType.Upgrade);
     }
 
+    public void ApplyBaseStat(E_PlayerStat statType)
+    {
+        float value = PlayerConfigDataManager.Instance.GetBaseValue(statType);
+        switch (statType)
+        {
+            case E_PlayerStat.MaxHp:
+                Data.Stat.maxHp = value;
+                break;
+            case E_PlayerStat.AtkMultiplier:
+                Data.Stat.atkMultiplier = value;
+                break;
+            case E_PlayerStat.DefRate:
+                Data.Stat.defRate = value;
+                break;
+            case E_PlayerStat.Armor:
+                Data.Stat.armor = Mathf.RoundToInt(value);
+                break;
+            case E_PlayerStat.MoveSpeed:
+                Data.Stat.moveSpeed = value;
+                break;
+            case E_PlayerStat.DodgeRate:
+                Data.Stat.dodgeRate = value;
+                break;
+            case E_PlayerStat.AttackSpeed:
+                Data.Stat.attackSpeed = value;
+                break;
+            case E_PlayerStat.PickupRange:
+                Data.Stat.pickupRange = value;
+                break;
+            case E_PlayerStat.CritiRate:
+                Data.Stat.critiRate = value;
+                break;
+            case E_PlayerStat.CritiDamageMultiplier:
+                Data.Stat.critiDamageMultiplier = value;
+                break;
+            case E_PlayerStat.MaxJumpTimes:
+                Data.Stat.maxJumpTimes = Mathf.RoundToInt(value);
+                break;
+            case E_PlayerStat.JumpStrength:
+                Data.Stat.jumpStrength = value;
+                break;
+            case E_PlayerStat.ExpRate:
+                Data.Stat.expRate = value;
+                break;
+        }
+    }
+
     public void ApplyStatUpgrade(E_PlayerStat statType)
     {
         // 得到該屬性的下一個等級
@@ -114,9 +165,11 @@ public class PlayerDataManager : MonoBehaviour
         float value = PlayerConfigDataManager.Instance.GetValue(statType, nextLevel);
         switch (statType)
         {
-            case E_PlayerStat.MaxHpFlat:
-                Data.Stat.maxHpFlat += value;
-                Data.Stat.currentHp += value;
+            case E_PlayerStat.MaxHp:
+                float oldMaxHp = Data.Stat.maxHp;
+                Data.Stat.maxHp = value;
+                float increasedHp = Data.Stat.maxHp - oldMaxHp;
+                Data.Stat.currentHp += increasedHp;
                 break;
             case E_PlayerStat.AtkMultiplier:
                 Data.Stat.atkMultiplier = value;
@@ -156,7 +209,7 @@ public class PlayerDataManager : MonoBehaviour
                 break;
         }
 
-        PlayerDataManager.Instance.NotifyAll();
+        NotifyAll();
     }
 
     public int GetNextStatLevel(E_PlayerStat statType)

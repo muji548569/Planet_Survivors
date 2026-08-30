@@ -18,20 +18,18 @@ public class PlayerData
 [System.Serializable]
 public class PlayerStat
 {
-    private float baseMaxHp = 50;
-    public float maxHpFlat = 0;
-    public float MaxHp => baseMaxHp + maxHpFlat;
+    public float maxHp;
     public float currentHp;
-    public float atkMultiplier = 1f;        
-    public float defRate = 0f;
-    public int armor = 0;
-    public float moveSpeed = 4f;
-    public float dodgeRate = 0f;
-    public float attackSpeed = 1f;
-    public float pickupRange = 1f;
-    public float critiRate = 0f;
-    public float critiDamageMultiplier = 2f;
-    public int maxJumpTimes = 1;
-    public float jumpStrength = 6f;
-    public float expRate = 1f;
+    public float atkMultiplier;        
+    public float defRate;
+    public int armor;
+    public float moveSpeed;
+    public float dodgeRate;
+    public float attackSpeed;
+    public float pickupRange;
+    public float critiRate;
+    public float critiDamageMultiplier  ;
+    public int maxJumpTimes;
+    public float jumpStrength;
+    public float expRate;
 }

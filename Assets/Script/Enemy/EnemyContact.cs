@@ -3,13 +3,17 @@ using UnityEngine;
 public class EnemyContact : MonoBehaviour, IEnemyDeathHandler, IPoolable
 {
     [SerializeField] private EnemyData data;
+    [SerializeField] private Collider contactColider;
     private float timer;
     private bool canAttack;
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -42,15 +46,20 @@ public class EnemyContact : MonoBehaviour, IEnemyDeathHandler, IPoolable
     public void OnEnemyDeath()
     {
         canAttack = false;
+        contactColider.enabled = false;
     }
 
     public void OnSpawnFromPool()
     {
         canAttack = true;
+        contactColider.enabled = true;
+
+        timer = 0;
     }
 
     public void OnReturnToPool()
     {
         canAttack = false;
+        contactColider.enabled = false;
     }
 }
