@@ -201,7 +201,7 @@ MonoBehaviour:
   planet: {fileID: 0}
   cameraTransform: {fileID: 0}
   rotateSpeed: 20
-  gravityStrength: 20
+  gravityStrength: 10
   groundCheckPoint: {fileID: 320825584247314479}
   groundCheckRadius: 0.4
   groundLayer:
@@ -226,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e812cd4175bcf25409af8b4d50d13079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  isDead: 0
 --- !u!114 &5419026009549078211
 MonoBehaviour:
   m_ObjectHideFlags: 0
