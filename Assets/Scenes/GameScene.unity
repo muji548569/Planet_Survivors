@@ -770,6 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   waveDatas:
+  - {fileID: 11400000, guid: 55b5f5dfe24ae0147a0f46c494acdef2, type: 2}
   - {fileID: 11400000, guid: a2a6fd68ab0585f47a317048a924cb86, type: 2}
   enemySpawner: {fileID: 1635444066}
 --- !u!4 &1635444068
