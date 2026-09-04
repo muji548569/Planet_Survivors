@@ -38,7 +38,11 @@ public class GamePanel : BasePanel
     public void SetHealth(float currentHealth, float maxHealth)
     {
         healthBar.SetValue(currentHealth, maxHealth);
-        textHealth.text = currentHealth + "/" + maxHealth;
+
+        int displayHealth = Mathf.CeilToInt(Mathf.Max(0, currentHealth));
+        int displayMaxHealth = Mathf.CeilToInt(maxHealth);
+
+        textHealth.text = displayHealth + "/" + displayMaxHealth;
     }
 
     public void SetExp(int currentExp, int requiredExp)

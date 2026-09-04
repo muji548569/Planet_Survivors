@@ -232,11 +232,10 @@ public class PlayerConfigDataManager : MonoBehaviour
         switch (data.displayType)
         {
             default:
-                return $"{sign} {absDiff}";
             case E_StatValueDisplayType.Number:
-                return $"{sign} {absDiff}";
+                return $"{sign} {absDiff:0.##}";
             case E_StatValueDisplayType.Percent:
-                return $"{sign} {absDiff * 100}%";
+                return $"{sign} {absDiff * 100:0.##}%";
             
         }
     }
