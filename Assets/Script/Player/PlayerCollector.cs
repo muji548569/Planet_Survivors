@@ -11,4 +11,9 @@ public class PlayerCollector : MonoBehaviour
     {
         PlayerDataManager.Instance.AddCoin(amount);
     }
+
+    public void AddHealth(int amount)
+    {
+        PlayerDataManager.Instance.AddHealth(amount);
+    }
 }

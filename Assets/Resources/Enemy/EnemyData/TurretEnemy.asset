@@ -29,6 +29,10 @@ MonoBehaviour:
     dropChance: 1
     minAmount: 1
     maxAmount: 2
+  - prefab: {fileID: 3308022243869603369, guid: c39a0b1602367e34eb74ce0914bddb29, type: 3}
+    dropChance: 0.05
+    minAmount: 1
+    maxAmount: 1
   dropSpreadRadius: 0.5
   projectilePrefab: {fileID: 5938138393028141061, guid: 0148e0282ea2ff84e8919e62e3280da8, type: 3}
   projectileSpeed: 7

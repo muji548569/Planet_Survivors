@@ -60,6 +60,12 @@ public class PlayerDataManager : MonoBehaviour
         OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.maxHp);
     }
 
+    public void AddHealth(float amount)
+    {
+        Data.Stat.currentHp = Mathf.Clamp(Data.Stat.currentHp + amount, 0, Data.Stat.maxHp);
+        OnHealthChanged?.Invoke(Data.Stat.currentHp, Data.Stat.maxHp);
+    }
+
     public void AddExp(int amount)
     {
         Data.currentExp += Mathf.RoundToInt(amount * Data.Stat.expRate);

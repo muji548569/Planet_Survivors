@@ -88,6 +88,9 @@ public class DropItem : MonoBehaviour, IPoolable
             case E_DropType.Exp:
                 player.AddExp(data.amount);
                 break;
+            case E_DropType.Heart:
+                player.AddHealth(data.amount);
+                break;
         }
 
         poolable.Release();

@@ -29,7 +29,7 @@ MonoBehaviour:
     enemyPrefab: {fileID: 3101013415425212851, guid: 3394ef3d72274474eb001af0adc5b03d, type: 3}
     waveType: 0
     delay: 10
-    spawnInterval: 3
+    spawnInterval: 5
     spawnCount: 10
     backsideConeAngle: 120
     ringAngleFromPlayer: 0

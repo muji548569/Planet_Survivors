@@ -18,7 +18,7 @@ public class EnemyDropper : MonoBehaviour
             {
                 Vector3 spawnPos = GetDropPosition();
 
-                PoolManager.Instance.Get(drop.prefab, spawnPos, Quaternion.identity);
+                PoolManager.Instance.Get(drop.prefab, spawnPos, transform.rotation);
             }
         }
     }

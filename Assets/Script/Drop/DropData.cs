@@ -14,4 +14,5 @@ public enum E_DropType
 {
     Coin,
     Exp,
+    Heart,
 }
