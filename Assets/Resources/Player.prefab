@@ -92,8 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   startWeapons:
   - {fileID: 11400000, guid: af92a882108156e46a7a1e10350019fe, type: 2}
-  - {fileID: 11400000, guid: 50f2e014910b9db4fac6d1801917bbae, type: 2}
-  - {fileID: 11400000, guid: d6d0d0d388c4577478095a5e4930e32e, type: 2}
   planet: {fileID: 0}
 --- !u!1 &5846108624138493941
 GameObject:

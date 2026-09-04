@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a514269fed526bf42a1a67cbad6a7253, type: 3}
-  m_Name: WaveTest
+  m_Name: Wave_1
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   waveName: test
-  startTime: 0
+  startTime: 60
   repeat: 1
-  repeatInterval: 25
+  repeatInterval: 30
   spawnEvents:
   - eventName: charge
     enemyPrefab: {fileID: 2218312253072764932, guid: 61af4987a0fe23741935eab71c2867c4, type: 3}
@@ -25,11 +25,3 @@ MonoBehaviour:
     spawnCount: 50
     backsideConeAngle: 90
     ringAngleFromPlayer: 0
-  - eventName: turret
-    enemyPrefab: {fileID: 3101013415425212851, guid: 3394ef3d72274474eb001af0adc5b03d, type: 3}
-    waveType: 1
-    delay: 0
-    spawnInterval: 0
-    spawnCount: 20
-    backsideConeAngle: 0
-    ringAngleFromPlayer: 20

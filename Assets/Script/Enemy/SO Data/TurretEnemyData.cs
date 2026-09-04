@@ -4,6 +4,7 @@ using UnityEngine;
 public class TurretEnemyData : EnemyData
 {
     [Header("Turret")]
+    public float remainLifetime;
     public GameObject projectilePrefab;
     public float projectileSpeed;
     public float projectileDamage;

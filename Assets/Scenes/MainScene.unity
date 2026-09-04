@@ -6528,7 +6528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
   defaultCapacity: 10
-  defaultMaxSize: 100
+  defaultMaxSize: 200
 --- !u!114 &1437074075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6545,11 +6545,13 @@ MonoBehaviour:
   - prefab: {fileID: 2227544548701127014, guid: dcd873a588ffb974a96658c432b3fd4f, type: 3}
     count: 10
   - prefab: {fileID: 7566541453131500546, guid: 502c55d9f03d8844d81e368e188eb4aa, type: 3}
-    count: 100
+    count: 200
   - prefab: {fileID: 2218312253072764932, guid: 61af4987a0fe23741935eab71c2867c4, type: 3}
     count: 50
   - prefab: {fileID: 3101013415425212851, guid: 3394ef3d72274474eb001af0adc5b03d, type: 3}
-    count: 50
+    count: 100
+  - prefab: {fileID: 5938138393028141061, guid: 0148e0282ea2ff84e8919e62e3280da8, type: 3}
+    count: 200
 --- !u!114 &1437074076
 MonoBehaviour:
   m_ObjectHideFlags: 0

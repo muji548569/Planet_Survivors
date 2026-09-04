@@ -4,12 +4,13 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
 {
     [SerializeField] private TurretEnemyData data;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float rotateSpeed;
 
     private Transform planet;
     private Transform target;
+    private PoolableObject poolable;
 
     private float attackTimer;
+    private float remainLifetime;
     private bool isActive;
 
     private EnemyKnockback knockback;
@@ -20,12 +21,15 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
     {
         animator = GetComponentInChildren<Animator>();
         knockback = GetComponent<EnemyKnockback>();
+        poolable = GetComponent<PoolableObject>();
     }
 
     public void Init(Transform planet, Transform target)
     {
         this.planet = planet;
         this.target = target;
+
+        remainLifetime = data.remainLifetime;
 
         knockback.Init(planet);
 
@@ -36,6 +40,13 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
     {
         if (!isActive) return;
         if (planet == null || target == null) return;
+
+        remainLifetime -= Time.deltaTime;
+        if (remainLifetime <= 0)
+        {
+            poolable.Release();
+            return;
+        }
 
         if (knockback.IsKnockbacking)
         {
@@ -77,7 +88,7 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
         TurretProjectile projectile = poolable.GetComponent<TurretProjectile>();
         if(projectile == null)
         {
-            Debug.LogError($"{projectile.name} 缺少 TurretProjectile");
+            Debug.LogError($"{poolable.name} 缺少 TurretProjectile");
             poolable.Release();
             return;
         }
@@ -113,6 +124,7 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
     {
         attackTimer = data.attackCooldown;
         isActive = false;
+        remainLifetime = 0;
     }
 
     public void OnReturnToPool()
@@ -121,6 +133,7 @@ public class TurretEnemy : MonoBehaviour, IPoolable, IEnemyInitializable, IEnemy
         planet = null;
         target = null;
         attackTimer = 0f;
+        remainLifetime = 0;
     }
 
     public void OnEnemyDeath()
